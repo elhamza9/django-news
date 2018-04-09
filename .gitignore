@@ -1,4 +1,4 @@
 *.py[co]
 *.swp
 
-__pycache__
+__pycache__/
