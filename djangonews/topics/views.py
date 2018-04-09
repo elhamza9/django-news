@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Topic
 
@@ -9,7 +9,7 @@ def index(request):
     if request.user.is_authenticated:
         return all_topics(request)
     else:
-        return redirect()
+        return redirect('site_home')
 
 # GET Request to get all articles
 def all_topics(request):
