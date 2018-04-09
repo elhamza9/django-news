@@ -9,6 +9,7 @@ def all_topics(request):
     s = request.GET.get('sort')
     if s == None or s == '' or s not in ('recent', 'rated'):
         s = 'recent'
+    
     topics = Topic.objects.all()
     if s == 'rated':
         pass
@@ -22,7 +23,10 @@ def all_topics(request):
 
 # GET Request to get an article by ID
 def topic_detail(request, id=0):
-    return HttpResponse('Get a Topic with ID = %d' % (id))
+    res = Topic.objects.filter(id=id)
+    assert len(res) == 1
+    topic = res[0]
+    return render(request, 'topics/detail.html', {'topic': topic})
 
 
 # POST Request to submit a Topic
