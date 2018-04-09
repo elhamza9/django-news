@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
 	path('', views.all_topics),
     path('new/', views.topic_submit),
-    path('<int:id>/', views.topic_detail),
+    path('<str:slug>/', views.topic_detail),
     path('<int:id>/upvote', views.topic_upvote),
     path('<int:id>/comment', views.topic_comment)
 ]
