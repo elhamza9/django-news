@@ -4,6 +4,13 @@ from django.shortcuts import render
 from .models import Topic
 
 
+#
+def index(request):
+    if request.user.is_authenticated:
+        return all_topics(request)
+    else:
+        return redirect()
+
 # GET Request to get all articles
 def all_topics(request):
     s = request.GET.get('sort')
