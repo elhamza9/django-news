@@ -18,9 +18,11 @@ from django.urls import path, include
 
 from django.contrib.auth.views import LoginView, LogoutView
 
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home, name='site_home'),
     path('login', LoginView.as_view(template_name='djangonews/login.html'), name='user_login'),
     path('logout', LogoutView.as_view(template_name='djangonews/logout.html'), name='user_logout'),
     path('topics/', include('topics.urls'))

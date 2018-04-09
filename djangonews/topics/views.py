@@ -9,7 +9,7 @@ def index(request):
     if request.user.is_authenticated:
         return all_topics(request)
     else:
-        return render(request, 'topics/home.html')
+        return redirect()
 
 # GET Request to get all articles
 def all_topics(request):

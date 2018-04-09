@@ -126,3 +126,4 @@ STATIC_URL = '/static/'
 '''
 # URL to redirect user after successful login 
 LOGIN_REDIRECT_URL='topics_list'
+LOGOUT_REDIRECT_URL='site_home'
