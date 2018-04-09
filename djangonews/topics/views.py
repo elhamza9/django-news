@@ -1,11 +1,15 @@
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+
+from .models import Topic
+
 
 # GET Request to get all articles
 def all_topics(request):
     s = request.GET.get('sort')
     if s == None or s == '' or s not in ('recent', 'rated'):
         s = 'recent'
-
+    topics = Topic.objects.all()
     if s == 'rated':
         pass
     elif s == 'recent':
@@ -13,7 +17,7 @@ def all_topics(request):
     else:
         pass
 
-    return HttpResponse('Index Page: List Topics here sorted by most %s' % (s))
+    return render(request, 'topics/list.html', {'topics': topics})
 
 
 # GET Request to get an article by ID

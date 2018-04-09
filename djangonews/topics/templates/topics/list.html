@@ -1,0 +1,19 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>
+            Topics
+        </title>
+    </head>
+    <body>
+        <h1>List Topics</h1>
+        <ul>
+            {% for t in topics %}
+                <article>
+                    <h2>{{ t.title }}</h2>
+                    <p> {{ t.content }}</p>
+                </article>
+            {% endfor %}
+        </ul>
+    </body>
+</html>
