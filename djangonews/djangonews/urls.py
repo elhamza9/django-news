@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from . import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.all_topics),
+    path('topics/', views.topic_submit),
+    path('topics/<int:id>/', views.topic_detail),
+    path('topics/<int:id>/upvote', views.topic_upvote),
+    path('topics/<int:id>/comment', views.topic_comment)
 ]
