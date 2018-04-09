@@ -9,13 +9,11 @@ def all_topics(request):
     s = request.GET.get('sort')
     if s == None or s == '' or s not in ('recent', 'rated'):
         s = 'recent'
-    topics = Topic.objects.all()
     if s == 'rated':
-        pass
-    elif s == 'recent':
-        pass
+        # TODO: sort by rating
+        topics = list()
     else:
-        pass
+        topics = Topic.objects.all().order_by('pub_date')
 
     return render(request, 'topics/list.html', {'topics': topics})
 
