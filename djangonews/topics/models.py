@@ -15,7 +15,7 @@ class Topic(models.Model):
 
     class Meta:
         db_table = 'topics'
-        ordering = ['published_at']
+        ordering = ['-published_at']
 
     def __str__(self):
         return self.title

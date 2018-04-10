@@ -14,8 +14,8 @@ def list_topics(request):
     if sorting_type == 'recent' or (sorting_type != 'recent' and sorting_type != 'rated') :
         topics = Topic.objects.all()
     else:
-        topics = Topic.objects.all()
-        
+        topics = Topic.objects.order_by('-nbr_upvotes')
+
     return render(request, 'topics/list.html', {'topics': topics})
 
 def detail_topic(request, slug=''):
