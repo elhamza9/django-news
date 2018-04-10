@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Topics Feed {% endblock %}
+
+{% block content %}
+
+{% for t in topics %}
+    <div class="topic-block">
+        <article>
+            <h3>{{ t.title }}</h3>
+            <p> {{ t.content }}</p>
+        </article>
+        <span class="line"></span>
+    </div>
+{% endfor %}
+
+{% endblock %}

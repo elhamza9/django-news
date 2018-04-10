@@ -1,0 +1,25 @@
+body {
+    background-color: yellow;
+}
+header {
+    height: 60px;
+}
+header .logo {
+    display: inline-block;
+    float: left;
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+header .profile {
+    display: inline-block;
+    float: right;
+    margin-right: 30px;
+}
+
+.topic-block .line {
+    display: block;
+    width: 400px;
+    height: 2px;
+    background-color: black;
+}

@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <link href="{% static 'topics/styles/main.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <href="">Django News !</href>
+            </div>
+            <div class="profile">
+                I'm not logged
+            </div>
+        </header>
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
