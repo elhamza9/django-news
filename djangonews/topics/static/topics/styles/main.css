@@ -16,3 +16,10 @@ header .profile {
     float: right;
     margin-right: 30px;
 }
+
+.topic-block .line {
+    display: block;
+    width: 400px;
+    height: 2px;
+    background-color: black;
+}
