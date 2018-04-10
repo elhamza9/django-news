@@ -3,13 +3,17 @@
 {% block title %} Topics Feed {% endblock %}
 
 {% block content %}
-
-<h1>{{ title }}</h1>
-<div>
-    <span class="date">Posted {{ published_at}} by author</span>
-</div>
-<p>
-    {{ content }}
-</p>
-
+<article class="topic-detail">
+    <header>
+        <h1 class="title">{{ title }}</h1>
+        <div class="detail">
+            <span class="date">Posted {{ published_at}} by author</span>
+        </div>
+    </header>
+    <div class="content">
+        <p>
+        {{ content }}
+        </p>
+    </div>
+</article>
 {% endblock %}

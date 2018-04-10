@@ -1,9 +1,11 @@
 body {
     background-color: yellow;
 }
+
 header {
     height: 60px;
 }
+
 header .logo {
     display: inline-block;
     float: left;
@@ -22,4 +24,15 @@ header .profile {
     width: 400px;
     height: 2px;
     background-color: black;
+}
+
+.topic-detail header .title {
+    margin-bottom: 6px;
+}
+.topic-detail header .detail span {
+    display: block;
+}
+
+.topic-detail .content {
+    margin-top: 35px;
 }
