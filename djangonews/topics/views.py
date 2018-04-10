@@ -27,4 +27,5 @@ def detail_topic(request, slug=''):
     return render(request, 'topics/detail.html',{
             'title': topic.title, 
             'published_at': topic.published_at ,
-            'content': topic.content})
+            'content': topic.content,
+            'comments': topic.comments.all() })

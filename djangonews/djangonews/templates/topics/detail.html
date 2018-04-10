@@ -16,4 +16,21 @@
         </p>
     </div>
 </article>
+<section class="comments">
+        <h6>Comments</h6>
+        <ul>
+            {% for c in comments %}
+            <li>
+                <div class="comment">
+                    <header>
+                        <span>{{ c.author }} at {{ c.published_at }}</span>
+                    </header>
+                    <div class="content">
+                        <p> {{ c.content }} </p>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
 {% endblock %}
