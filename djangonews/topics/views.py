@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.core import serializers
 
 from .models import Topic, Comment, Upvote
 from .forms import CommentForm, UpvoteForm
@@ -21,10 +22,13 @@ def list_topics(request):
     
     # Pagination
     paginator = Paginator(topic_list, 2)
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
     topics = paginator.get_page(page)
 
-    return render(request, 'topics/list.html', {'topics': topics})
+    if page == 1:
+        return render(request, 'topics/list.html', {'topics': topics})
+    else:
+        return JsonResponse({'topics': serializers.serialize('json', topics)})
 
 def detail_topic(request, slug=''):
     try:
