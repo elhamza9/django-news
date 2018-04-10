@@ -4,7 +4,9 @@ from .models import Topic, Comment
 # Register your models here.
 
 class TopicAdmin(admin.ModelAdmin):
-    pass
+    class Meta:
+        model: Topic
+        exclude = ('nbr_upvotes')
 
 class CommentAdmin(admin.ModelAdmin):
     pass

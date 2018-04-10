@@ -11,7 +11,8 @@ class Topic(models.Model):
     slug = models.CharField(blank=False, null=False, max_length=100)
     content = models.TextField(blank=False, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author of the Topic')
-    
+    nbr_upvotes = models.IntegerField(blank=False, null=False, default=0)
+
     class Meta:
         db_table = 'topics'
         ordering = ['published_at']
@@ -40,10 +41,9 @@ class Upvote(models.Model):
 
     class Meta:
         db_table = 'upvotes'
-    
-    def __str__(self):
-        return '{} upvoted the Topic: {}'.format(self.upvoter.name, self.topic.title)
 
+    def __str__(self):
+        return '{} upvoted the Topic: {}'.format(self.upvoter.get_username(), self.topic.title)
 
     
     
