@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
 
-from .models import Topic
+from .models import Topic, Comment
+from .forms import CommentForm
+
+from django.utils import timezone
 
 # Create your views here.
 
@@ -28,4 +31,22 @@ def detail_topic(request, slug=''):
             'title': topic.title, 
             'published_at': topic.published_at ,
             'content': topic.content,
-            'comments': topic.comments.all() })
+            'id': topic.id,
+            'comments': topic.comments.all(),
+            'form': None if request.user.is_authenticated == False else CommentForm() })
+
+def submit_comment(request, id_topic=0):
+    try:
+        assert request.method == 'POST'
+    except AssertionError:
+        raise Http404("Wrong Method")
+    
+    topic = get_object_or_404(Topic, pk=id_topic)
+    author = request.user
+    comment = Comment(author=author, topic=topic, published_at=timezone.now())
+    form = CommentForm(instance=comment, data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('list_topics')
+    else:
+        raise Http404('Form invalid')

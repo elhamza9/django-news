@@ -18,7 +18,7 @@
         </div>
     </article>
     <section class="comments">
-        <h6 class="title">Comments:</h6>
+        <h4 class="title">Comments:</h4>
         <ul>
             {% for c in comments %}
             <li>
@@ -32,7 +32,40 @@
                 </div>
             </li>
             {% endfor %}
+            <li>
+                <div class="comment-form-wrapper">
+                {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'submit_comment' id_topic=id %}">
+                        {% csrf_token %}
+                        {{ form }}
+                        <button type="submit">Publish Comment !</button>
+                        <button type="button" onclick="toggleCommentBox()">Cancel</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'user_login' %}">Please Login first</a>
+                {% endif %}
+                </div>
+            </li>
         </ul>
+        
+        <button class="write-com-btn" onclick="toggleCommentBox()">Write Comment</button>
     </section>
 </div>
 {% endblock %}
+
+{% block js %}
+<script>
+    let formWrapper = document.getElementsByClassName('comment-form-wrapper')[0];
+    let writeComBtn = document.getElementsByClassName('write-com-btn')[0];
+    
+    formWrapper.style.display = 'none';
+    writeComBtn.style.display = 'block';
+
+        const toggleCommentBox = (ev) => {
+            formWrapper.style.display === 'none' ? formWrapper.style.display = 'block' : formWrapper.style.display = 'none';
+            writeComBtn.style.display === 'none' ? writeComBtn.style.display = 'block' : writeComBtn.style.display = 'none';
+        }
+
+</script>
+{% endblock %}
+

@@ -2,6 +2,10 @@ body {
     background-color: yellow;
 }
 
+button {
+    cursor: pointer;
+}
+
 header.base_header {
     height: 60px;
 }
@@ -49,4 +53,10 @@ header.base_header .profile {
     border: 1px solid black;
     margin: 5px;
     padding: 4px;
+}
+
+.topic-detail-wrapper .comments .comment-form-wrapper textarea {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 5px;
 }

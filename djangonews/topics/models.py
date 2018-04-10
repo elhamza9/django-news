@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.utils import timezone
+
 # Create your models here.
 
 class Topic(models.Model):
@@ -19,7 +21,7 @@ class Topic(models.Model):
 
 
 class Comment(models.Model):
-    published_at = models.DateTimeField(blank=False, null=False)
+    published_at = models.DateTimeField(blank=False, null=False, default=timezone.now())
     content = models.TextField(blank=False, null=False)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='comments', verbose_name='related Topic')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author of the comment')
