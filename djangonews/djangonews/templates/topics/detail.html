@@ -3,21 +3,22 @@
 {% block title %} Topics Feed {% endblock %}
 
 {% block content %}
-<article class="topic-detail">
-    <header>
-        <h1 class="title">{{ title }}</h1>
-        <div class="detail">
-            <span class="date">Posted {{ published_at}} by author</span>
+<div class="topic-detail-wrapper">
+    <article class="topic-detail">
+        <header>
+            <h1 class="title">{{ title }}</h1>
+            <div class="detail">
+                <span class="date">Posted {{ published_at}} by author</span>
+            </div>
+        </header>
+        <div class="content">
+            <p>
+                {{ content }}
+            </p>
         </div>
-    </header>
-    <div class="content">
-        <p>
-        {{ content }}
-        </p>
-    </div>
-</article>
-<section class="comments">
-        <h6>Comments</h6>
+    </article>
+    <section class="comments">
+        <h6 class="title">Comments:</h6>
         <ul>
             {% for c in comments %}
             <li>
@@ -33,4 +34,5 @@
             {% endfor %}
         </ul>
     </section>
+</div>
 {% endblock %}

@@ -2,18 +2,18 @@ body {
     background-color: yellow;
 }
 
-header {
+header.base_header {
     height: 60px;
 }
 
-header .logo {
+header.base_header .logo {
     display: inline-block;
     float: left;
     font-size: 30px;
     margin-left: 30px;
 }
 
-header .profile {
+header.base_header .profile {
     display: inline-block;
     float: right;
     margin-right: 30px;
@@ -26,13 +26,27 @@ header .profile {
     background-color: black;
 }
 
-.topic-detail header .title {
+.topic-detail-wrapper .topic-detail header .title {
     margin-bottom: 6px;
 }
-.topic-detail header .detail span {
+.topic-detail-wrapper .topic-detail header .detail span {
     display: block;
 }
-
-.topic-detail .content {
+.topic-detail-wrapper .topic-detail .content {
     margin-top: 35px;
+}
+
+.topic-detail-wrapper .comments .title {
+    font-size: 20px;
+    margin: 5px;
+}
+
+.topic-detail-wrapper .comments ul {
+    list-style-type: none;
+}
+
+.topic-detail-wrapper .comments .comment {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 4px;
 }
