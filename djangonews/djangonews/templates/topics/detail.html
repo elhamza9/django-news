@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %} Topics Feed {% endblock %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+<div>
+    <span class="date">Posted {{ published_at}} by author</span>
+</div>
+<p>
+    {{ content }}
+</p>
+
+{% endblock %}
