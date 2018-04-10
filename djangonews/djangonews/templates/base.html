@@ -8,7 +8,7 @@
     <body>
         <header class="base_header">
             <div class="logo">
-                <a href="">Django News !</a>
+                <a href="{% url 'site_index' %}">Django News !</a>
             </div>
             <div class="profile">
                 {% if user.is_authenticated %}
