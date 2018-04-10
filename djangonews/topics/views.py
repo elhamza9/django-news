@@ -36,6 +36,7 @@ def detail_topic(request, slug=''):
             'comments': topic.comments.all(),
             'nbr_upvotes': len(topic.upvotes.all()),
             'nbr_comments': len(topic.comments.all()),
+            'upvoted': True,
             'comment_form': None if request.user.is_authenticated == False else CommentForm(),
             'upvote_form': None if request.user.is_authenticated == False else UpvoteForm() })
 
