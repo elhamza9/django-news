@@ -54,7 +54,7 @@ def submit_comment(request, id_topic=0):
     form = CommentForm(instance=comment, data=request.POST)
     if form.is_valid():
         form.save()
-        return redirect('list_topics')
+        return redirect('detail_topic', slug=topic.slug)
     else:
         raise Http404('Form invalid')
 
