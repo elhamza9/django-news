@@ -18,10 +18,12 @@
         </div>
     </article>
     <section class="upvotes">
-        <div class="">
+        <div>
+            <span>{{ nbr_upvotes }}</span>
             <span class="upvote">
                 <form action="{% url 'upvote_topic' id_topic=id %}" method="post">
                     {% csrf_token %}
+                    {{ upvote_form }}
                     <button>Upvote</button>
                 </form>
             </span>
@@ -29,6 +31,7 @@
     </section>
     <section class="comments">
         <h4 class="title">Comments:</h4>
+        <span>{{ nbr_comments }}</span>
         <ul>
             {% for c in comments %}
             <li>
@@ -47,7 +50,7 @@
                 {% if user.is_authenticated %}
                         <form method="post" action="{% url 'submit_comment' id_topic=id %}">
                         {% csrf_token %}
-                        {{ form }}
+                        {{ comment_form }}
                         <button type="submit">Publish Comment !</button>
                         <button type="button" onclick="toggleCommentBox()">Cancel</button>
                     </form>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
 
-from .models import Topic, Comment
-from .forms import CommentForm
+from .models import Topic, Comment, Upvote
+from .forms import CommentForm, UpvoteForm
 
 from django.utils import timezone
 
@@ -33,7 +33,10 @@ def detail_topic(request, slug=''):
             'content': topic.content,
             'id': topic.id,
             'comments': topic.comments.all(),
-            'form': None if request.user.is_authenticated == False else CommentForm() })
+            'nbr_upvotes': len(topic.upvotes.all()),
+            'nbr_comments': len(topic.comments.all()),
+            'comment_form': None if request.user.is_authenticated == False else CommentForm(),
+            'upvote_form': None if request.user.is_authenticated == False else UpvoteForm() })
 
 def submit_comment(request, id_topic=0):
     try:
@@ -52,4 +55,17 @@ def submit_comment(request, id_topic=0):
         raise Http404('Form invalid')
 
 def upvote_topic(request, id_topic=0):
-    return HttpResponse('Upvoting ...')
+    try:
+        assert request.method == 'POST'
+    except AssertionError:
+        raise Http404("Wrong Method")
+    
+    topic = get_object_or_404(Topic, pk=id_topic)
+    user = request.user
+    upvote = Upvote(upvoter=user, topic=topic, timestamp=timezone.now())
+    form = UpvoteForm(instance=upvote, data=request.POST)
+    if form.is_valid():
+        form.save()
+        return redirect('detail_topic', slug=topic.slug)
+    else:
+        raise Http404('Form invalid')

@@ -31,3 +31,19 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content[:10]
+
+
+class Upvote(models.Model):
+    timestamp = models.DateTimeField(blank=False, null=False, default=timezone.now())
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='upvotes', verbose_name='Upvoted Topic')
+    upvoter = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User who upvoted')
+
+    class Meta:
+        db_table = 'upvotes'
+    
+    def __str__(self):
+        return '{} upvoted the Topic: {}'.format(self.upvoter.name, self.topic.title)
+
+
+    
+    
