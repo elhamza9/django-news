@@ -7,10 +7,10 @@
 {% for t in topics %}
     <div class="topic-block">
         <article>
-            <h3><a href="#">{{ t.title }}</a></h3>
+            <h3><a href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }}</a></h3>
             <p> {{ t.content }}</p>
             <div>
-                <a href="#">Read More</a>
+                <a href="{% url 'detail_topic' slug=t.slug %}">Read More</a>
             </div>
         </article>
         <span class="line"></span>
