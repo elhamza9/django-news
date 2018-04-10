@@ -8,10 +8,15 @@
     <body>
         <header>
             <div class="logo">
-                <href="">Django News !</href>
+                <a href="">Django News !</a>
             </div>
             <div class="profile">
-                I'm not logged
+                {% if user.is_authenticated %}
+                    <span>Welcome {{ user.get_username }} ! </span>
+                    <a href="{% url 'user_logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'user_login' %}">Login</a>
+                {% endif %}
             </div>
         </header>
         <main>
