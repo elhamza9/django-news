@@ -17,6 +17,16 @@
             </p>
         </div>
     </article>
+    <section class="upvotes">
+        <div class="">
+            <span class="upvote">
+                <form action="{% url 'upvote_topic' id_topic=id %}" method="post">
+                    {% csrf_token %}
+                    <button>Upvote</button>
+                </form>
+            </span>
+        </div>
+    </section>
     <section class="comments">
         <h4 class="title">Comments:</h4>
         <ul>

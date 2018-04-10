@@ -50,3 +50,6 @@ def submit_comment(request, id_topic=0):
         return redirect('list_topics')
     else:
         raise Http404('Form invalid')
+
+def upvote_topic(request, id_topic=0):
+    return HttpResponse('Upvoting ...')
