@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
+from django.db.models import Q
 
 from .models import Topic, Comment, Upvote
 from .forms import CommentForm, UpvoteForm
@@ -54,14 +55,22 @@ def submit_comment(request, id_topic=0):
     else:
         raise Http404('Form invalid')
 
+
 def upvote_topic(request, id_topic=0):
     try:
         assert request.method == 'POST'
     except AssertionError:
         raise Http404("Wrong Method")
-    
+
     topic = get_object_or_404(Topic, pk=id_topic)
     user = request.user
+    
+    try:
+        res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
+        assert len(res) == 0
+    except AssertionError:
+        return redirect('detail_topic', slug=topic.slug)
+    
     upvote = Upvote(upvoter=user, topic=topic, timestamp=timezone.now())
     form = UpvoteForm(instance=upvote, data=request.POST)
     if form.is_valid():
