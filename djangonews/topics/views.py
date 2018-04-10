@@ -10,14 +10,13 @@ from django.utils import timezone
 # Create your views here.
 
 def list_topics(request):
-    topics = Topic.objects.all()
+    sorting_type = request.GET.get('sort', 'recent')
+    if sorting_type == 'recent' or (sorting_type != 'recent' and sorting_type != 'rated') :
+        topics = Topic.objects.all()
+    else:
+        topics = Topic.objects.all()
+        
     return render(request, 'topics/list.html', {'topics': topics})
-    '''
-    titles = []
-    for t in topics:
-        titles.append(t.title)
-    return HttpResponse('Here I list all topics: %s' % (' - '.join(titles)))
-    '''
 
 def detail_topic(request, slug=''):
     try:
