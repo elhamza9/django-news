@@ -7,7 +7,10 @@ from .models import Topic
 
 def list_topics(request):
     topics = Topic.objects.all()
+    return render(request, 'topics/list.html', {'topics': topics})
+    '''
     titles = []
     for t in topics:
         titles.append(t.title)
     return HttpResponse('Here I list all topics: %s' % (' - '.join(titles)))
+    '''
