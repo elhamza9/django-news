@@ -6,7 +6,7 @@ from .models import Topic, Comment
 class TopicAdmin(admin.ModelAdmin):
     fields = ('title', 'slug', 'content')
     class Meta:
-        model: Topic
+        model = Topic
     def save_model(self, request, obj, form, change):
         obj.author = request.user
         super().save_model(request, obj, form, change)
