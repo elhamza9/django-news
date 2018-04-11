@@ -13,6 +13,7 @@
             <div class="profile">
                 {% if user.is_authenticated %}
                     <span>Welcome {{ user.get_username }} ! </span>
+                    <a href="{% url 'add_topic' %}">Add a Topic</a>
                     <a href="{% url 'user_logout' %}">Logout</a>
                 {% else %}
                     <a href="{% url 'user_login' %}">Login</a>
