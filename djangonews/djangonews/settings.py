@@ -111,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # for Facebook Auth
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_FACEBOOK_KEY = '101886774002287'
