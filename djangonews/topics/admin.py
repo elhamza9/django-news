@@ -4,12 +4,11 @@ from .models import Topic, Comment
 # Register your models here.
 
 class TopicAdmin(admin.ModelAdmin):
+    fields = ('title', 'slug', 'content')
     class Meta:
         model: Topic
-        exclude = ('nbr_upvotes')
-
-class CommentAdmin(admin.ModelAdmin):
-    pass
+    def save_model(self, request, obj, form, change):
+        obj.author = request.user
+        super().save_model(request, obj, form, change)
 
 admin.site.register(Topic, TopicAdmin)
-admin.site.register(Comment, CommentAdmin)
