@@ -13,12 +13,14 @@ header.base_header {
 
 header.base_header .logo {
     display: inline-block;
+    float: left;
     font-size: 30px;
     margin-left: 30px;
 }
 
 header.base_header .profile {
     display: inline-block;
+    float: right;
     margin-right: 30px;
 }
 
