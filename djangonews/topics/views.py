@@ -35,9 +35,14 @@ def detail_topic(request, slug=''):
         raise Http404("Article Not Found !")
 
     topic = res[0]
-    res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=request.user))
-    assert len(res) in (0,1)
-    user_upvoted_topic = len(res) == 1
+    user = request.user
+    if user.is_authenticated == True:
+        res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
+        assert len(res) in (0,1)
+        user_upvoted_topic = len(res) == 1
+    else:
+        user_upvoted_topic = False
+        
     return render(request, 'topics/detail.html',{
             'title': topic.title, 
             'published_at': topic.published_at ,
