@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 from .models import Topic, Comment, Upvote
-from .forms import CommentForm, UpvoteForm
+from .forms import TopicForm, CommentForm, UpvoteForm
 
 from django.utils import timezone
 
@@ -90,3 +90,17 @@ def upvote_topic(request, id_topic=0):
         return redirect('detail_topic', slug=topic.slug)
     else:
         raise Http404('Form invalid')
+
+def add_topic(request):
+    if request.method == 'POST':
+        topic = Topic(author=request.user)
+        form = TopicForm(instance=topic, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('site_index')
+        return HttpResponse('Posting a Topic')
+    elif request.method == 'GET':
+        form = TopicForm()
+        return render(request, 'topics/form.html', {'action': 'Add', 'form': form})
+    else:
+        raise Http404('Wrong Method')

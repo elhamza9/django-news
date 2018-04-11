@@ -1,6 +1,11 @@
 from django.forms import ModelForm
 
-from .models import Comment, Upvote
+from .models import Topic, Comment, Upvote
+
+class TopicForm(ModelForm):
+    class Meta:
+        model = Topic
+        exclude = ('published_at', 'author', 'nbr_upvotes')
 
 class CommentForm(ModelForm):
     class Meta:
