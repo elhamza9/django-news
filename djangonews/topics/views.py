@@ -43,6 +43,7 @@ def detail_topic(request, slug=''):
             'published_at': topic.published_at ,
             'content': topic.content,
             'id': topic.id,
+            'author_name': topic.author.get_username(),
             'comments': topic.comments.all(),
             'nbr_upvotes': topic.nbr_upvotes,
             'nbr_comments': len(topic.comments.all()),
