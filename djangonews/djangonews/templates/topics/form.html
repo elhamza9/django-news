@@ -1,11 +1,25 @@
 {% extends 'base.html' %}
 
+{% block title %} {{ action }} Topic {% endblock %}
 {% block content %}
 
 <h1>{{ action }} Topic</h1>
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Save</button>
-</form>
+<div>
+    <form class="topic-form" method="post">
+        {% csrf_token %}
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            <div class="field">
+                <label>{{ field.label_tag }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+            <div>
+                <button type="submit">Save</button>
+            </li>
+    </form>
+</div>
 {% endblock %}

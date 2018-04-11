@@ -2,6 +2,7 @@ body {
     background-color: yellow;
 }
 
+
 button {
     cursor: pointer;
 }
@@ -12,14 +13,12 @@ header.base_header {
 
 header.base_header .logo {
     display: inline-block;
-    float: left;
     font-size: 30px;
     margin-left: 30px;
 }
 
 header.base_header .profile {
     display: inline-block;
-    float: right;
     margin-right: 30px;
 }
 
@@ -87,3 +86,15 @@ header.base_header .profile {
     height: 50px;
     margin-bottom: 5px;
 }
+
+
+.topic-form {
+    padding:20px;
+}
+
+
+.topic-form .field { padding: 4px; margin:1px;  }
+
+.topic-form .field label { display:inline-block; width:120px;  }
+
+.topic-form .field input { display:inline-block;  }
