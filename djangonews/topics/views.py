@@ -79,9 +79,13 @@ def upvote_topic(request, id_topic=0):
     except AssertionError:
         raise Http404("Wrong Method")
 
-    topic = get_object_or_404(Topic, pk=id_topic)
     user = request.user
+    try:
+        assert user.is_authenticated == True
+    except AssertionError:
+        return redirect('user_login')
     
+    topic = get_object_or_404(Topic, pk=id_topic)
     try:
         res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
         assert len(res) == 0
