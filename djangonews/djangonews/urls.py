@@ -24,5 +24,6 @@ urlpatterns = [
     path('topics/', include('topics.urls')),
     path('login', LoginView.as_view(template_name='auth/login.html'), name='user_login'),
     path('logout', LogoutView.as_view(), name='user_logout'),
+    path('oauth/', include('social_django.urls', namespace='social')),  # for Facebook Auth
     path('',views.welcome, name='site_index')
 ]
