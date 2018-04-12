@@ -43,7 +43,11 @@
             
             let header  = document.createElement('h3');
             header.classList.add('title');
-            header.innerHTML = title;
+            let link = document.createElement('a');
+            link.classList.add('link');
+            link.innerHTML = title;
+            link.setAttribute('href', '/topics/'+slug);
+            header.appendChild(link);
 
             let p = document.createElement('p');
             p.innerHTML = content;
@@ -51,7 +55,7 @@
             let footer = document.createElement('div');
             let readMore = document.createElement('a');
             readMore.innerHTML = 'Read More';
-            readMore.setAttribute('href', '#');
+            readMore.setAttribute('href', '/topics/'+slug);
             footer.appendChild(readMore);
     
             let line = document.createElement('span');
