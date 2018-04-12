@@ -185,6 +185,19 @@ main.base-main {
     margin-bottom: 5px;
 }
 
+.topic-detail-wrapper .comments .write-com-btn {
+    display: block;
+    border: none;
+    width: 150px;
+    height: 40px;
+    border: 1px solid black;
+    background-color: #cee3f3;
+    font-size: 13px;
+}
+
+.topic-detail-wrapper .comments .write-com-btn span {
+    font-size: 18px;
+}
 
 .topic-form {
     padding:20px;
