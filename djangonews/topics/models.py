@@ -12,6 +12,7 @@ class Topic(models.Model):
     content = models.TextField(blank=False, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author of the Topic')
     nbr_upvotes = models.IntegerField(blank=False, null=False, default=0)
+    nbr_comments = models.IntegerField(blank=False, null=False, default=0)
 
     class Meta:
         db_table = 'topics'

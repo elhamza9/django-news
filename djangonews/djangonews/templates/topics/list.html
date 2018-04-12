@@ -9,7 +9,7 @@
 {% for t in topics %}
     <div class="topic-block">
         <article>
-            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }} ({{ t.comments.count }})</a></h3>
+            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }} ({{ t.nbr_comments }})</a></h3>
             <p> {{ t.content }}</p>
             <div>
                 <a href="{% url 'detail_topic' slug=t.slug %}">Read More</a>
@@ -35,7 +35,7 @@
         btn = document.getElementById('more-btn');
         let topicsDiv = document.getElementsByClassName('topics-list')[0];
 
-        const createArticle = ( id, title, slug, content, time, nbrUpvotes ) => {
+        const createArticle = ( id, title, slug, content, time, nbrUpvotes, nbrComments ) => {
             let wrapper = document.createElement('div')
             wrapper.classList.add('topic-block');
             
@@ -45,7 +45,7 @@
             header.classList.add('title');
             let link = document.createElement('a');
             link.classList.add('link');
-            link.innerHTML = title;
+            link.innerHTML = title + ' ( ' + nbrComments + ' )';
             link.setAttribute('href', '/topics/'+slug);
             header.appendChild(link);
 
@@ -83,7 +83,7 @@
                         let resp = JSON.parse(xhr.responseText);
                         console.log(resp);
                         for (let el of resp) {
-                            createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes);
+                            createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes, el.nbr_comments);
                         }
                         btn.classList.remove('loading');
                         btn.innerHTML = 'More';
