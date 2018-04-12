@@ -41,11 +41,16 @@
             <li>
                 <div class="comment">
                     <header>
-                        <span>{{ c.author }} at {{ c.published_at }}</span>
+                        <span class="detail">{{ c.author }} at {{ c.published_at }}</span>
                     </header>
                     <div class="content">
                         <p> {{ c.content }} </p>
                     </div>
+                    {% if c.author == user %}
+                    <footer>
+                        <a class="link" href="#">[delete comment]</a>
+                    </footer>
+                    {% endif %}
                 </div>
             </li>
             {% endfor %}

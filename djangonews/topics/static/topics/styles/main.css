@@ -204,6 +204,15 @@ main.base-main {
     padding: 4px;
 }
 
+.topic-detail-wrapper .comments .comment footer {
+    height: 20px;
+}
+
+.topic-detail-wrapper .comments .comment footer .link {
+    float: right;
+    color: red;
+}
+
 .topic-detail-wrapper .comments .comment-form-wrapper textarea {
     width: 100%;
     height: 50px;
