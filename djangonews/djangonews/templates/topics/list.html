@@ -93,7 +93,7 @@
                     }
                 }
             }
-            xhr.open('get','/topics?page=2', true)
+            xhr.open('get','/topics?page='+page, true)
             xhr.send(null);
             btn.classList.add('loading');
             btn.innerHTML = 'Loading ...';
