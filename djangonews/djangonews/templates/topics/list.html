@@ -67,41 +67,26 @@
         const loadTopics = () => {
             page += 1;
             let xhr = new XMLHttpRequest();
-            /*
             xhr.onload = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        alert (xhr.responseText);
+                        let resp = JSON.parse(xhr.responseText);
+                        console.log(resp);
+                        for (let el of resp) {
+                            console.log(el);
+                            createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes);
+                        }
+                        btn.classList.remove('loading');
+                        btn.innerHTML = 'More';
                     }
                 }
             }
-            */
-            xhr.open('get','/topics?page=2', false)
+            xhr.open('get','/topics?page=2', true)
             xhr.send(null);
-            if (xhr.status === 200) {
-                let resp = JSON.parse(xhr.responseText);
-                console.log(resp);
-                for(let el of resp) {
-                    console.log(el);
-                    createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes);
-                }
-            }
+            btn.classList.add('loading');
+            btn.innerHTML = 'Loading ...';
         };
         btn.addEventListener('click',loadTopics);
-
-            /*
-            $.ajax({
-                type: 'get',
-                url: '/topics',
-                data: {
-                    page: page
-                },
-                success: (resp)=> { 
-                    console.log(resp);
-                 },
-
-            });
-            */
 
     </script>
 

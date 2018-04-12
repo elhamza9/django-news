@@ -125,6 +125,10 @@ main.base-main {
     border: 1px solid black;
 }
 
+.topics-list-wrapper .pagination .more-btn.loading {
+    background-color: #ff0000;
+}
+
 .topic-detail-wrapper .line {
     display: block;
     width: 50%;
