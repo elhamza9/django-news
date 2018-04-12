@@ -6,21 +6,32 @@
         <link href="{% static 'topics/styles/main.css' %}" rel="stylesheet">
     </head>
     <body>
-        <header class="base_header">
+        <header class="base-header">
             <div class="logo">
-                <a href="{% url 'site_index' %}">Django News !</a>
+                <a class="link" href="{% url 'site_index' %}">Django News !</a>
             </div>
             <div class="profile">
                 {% if user.is_authenticated %}
-                    <span>Welcome {{ user.get_username }} ! </span>
-                    <a href="{% url 'add_topic' %}">Add a Topic</a>
-                    <a href="{% url 'user_logout' %}">Logout</a>
+                    <span class="welcome">Welcome <span class="username">{{ user.get_username }} !</span> </span>
+                    <div class="sub-menu">
+                        <ul>
+                            <li>
+                                    <a class="link" href="#">Profile</a>
+                            </li>
+                            <li>
+                                    <a class="link" href="{% url 'add_topic' %}">Add a Topic</a>
+                            </li>
+                            <li>
+                                <a class="link" href="{% url 'user_logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
                 {% else %}
-                    <a href="{% url 'user_login' %}">Login</a>
+                    <a class="link" href="{% url 'user_login' %}">Login</a>
                 {% endif %}
             </div>
         </header>
-        <main>
+        <main class="base-main">
             {% block content %}
             {% endblock %}
         </main>

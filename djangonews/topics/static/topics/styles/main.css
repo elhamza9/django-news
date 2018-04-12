@@ -1,34 +1,130 @@
 body {
-    background-color: yellow;
+    background-color: white;
 }
-
 
 button {
     cursor: pointer;
 }
 
-header.base_header {
-    height: 60px;
+.link {
+    text-decoration: none;
 }
 
-header.base_header .logo {
+li {
+    list-style-type: none;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+header.base-header {
+    height: 60px;
+    margin: 10px 100px 0px 100px;
+    border: 1px solid black;
+}
+
+header.base-header .logo {
     display: inline-block;
     float: left;
     font-size: 30px;
-    margin-left: 30px;
+    padding: 10px;
 }
 
-header.base_header .profile {
+header.base-header .logo .link {
+    color: orange;
+}
+
+header.base-header .profile {
     display: inline-block;
     float: right;
-    margin-right: 30px;
+    margin: 20px 10px 0px 0px;
 }
 
-.topic-block .line {
+header.base-header .profile .sub-menu {
+    border: 1px solid black;
+    background-color: white;
+    margin-top: 5px;
+    display: none;
+}
+
+header.base-header .profile .welcome {
+    cursor: pointer;
+    font-size: 17px;
+}
+
+header.base-header .profile:hover .sub-menu {
     display: block;
-    width: 400px;
+}
+
+header.base-header .profile .welcome .username {
+    color: #5a71be;
+}
+
+header.base-header .profile .sub-menu li {
+    border-bottom: 1px solid black;
+}
+
+header.base-header .profile .sub-menu li:hover {
+    background-color: #f6efee;
+}
+
+header.base-header .profile .link {
+    color: gray;
+    display: block;
+    padding: 6px 10px 6px 10px;
+}
+
+main.base-main {
+    margin-top: 40px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.topics-list .topic-block {
+    margin-bottom: 10px;
+}
+
+.topics-list .line {
+    display: block;
+    width: 100%;
     height: 2px;
     background-color: black;
+    margin-top: 10px;
+}
+
+.topics-list .topic-block .title {
+    color: black;
+    font-size: 30px;
+}
+
+.topics-list .topic-block .link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.topics-list .pagination {
+    width: 100%;
+    height: 50px;
+    background-color: #f5eeee;
+    text-align: center;
+    padding-top:10px;
+    cursor: pointer;
+}
+
+.topics-list .pagination:hover {
+    background-color: #f5c4c4;
+    border: 1px solid black;
+}
+
+.topics-list .pagination .link {
+    text-decoration: none;
+    font-size: 30px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: #5a72bd;
 }
 
 .topic-detail-wrapper .topic-detail header .title {

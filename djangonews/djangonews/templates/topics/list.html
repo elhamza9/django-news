@@ -4,10 +4,12 @@
 
 {% block content %}
 
+<div class="topics-list">
+    <span class="line"></span>
 {% for t in topics %}
     <div class="topic-block">
         <article>
-            <h3><a href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }} ({{ t.comments.count }})</a></h3>
+            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }} ({{ t.comments.count }})</a></h3>
             <p> {{ t.content }}</p>
             <div>
                 <a href="{% url 'detail_topic' slug=t.slug %}">Read More</a>
@@ -19,10 +21,10 @@
 
     <div class="pagination">
        {% if topics.has_next %}
-        <a href="?page={{ topics.next_page_number }}">More</a>
+        <a class="link" href="?page={{ topics.next_page_number }}">More</a>
        {% else %}
-        <a href="?page={{ topics.previous_page_number }}">Previous</a>
+        <a class="link" href="?page={{ topics.previous_page_number }}">Previous</a>
        {% endif %}
     </div>
-
+</div>
 {% endblock %}
