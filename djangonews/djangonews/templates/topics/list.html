@@ -3,7 +3,7 @@
 {% block title %} Topics Feed {% endblock %}
 
 {% block content %}
-
+<div class="topics-list-wrapper" >
 <div class="topics-list">
     <span class="line"></span>
 {% for t in topics %}
@@ -18,13 +18,91 @@
         <span class="line"></span>
     </div>
 {% endfor %}
-
-    <div class="pagination">
-       {% if topics.has_next %}
-        <a class="link" href="?page={{ topics.next_page_number }}">More</a>
-       {% else %}
-        <a class="link" href="?page={{ topics.previous_page_number }}">Previous</a>
-       {% endif %}
-    </div>
 </div>
+<div class="pagination">
+    <button id="more-btn" class="more-btn" type="button">More</button>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+    
+    <script>
+        let page = 1;
+        btn = document.getElementById('more-btn');
+        let topicsDiv = document.getElementsByClassName('topics-list')[0];
+
+        const createArticle = ( id, title, slug, content, time, nbrUpvotes ) => {
+            let wrapper = document.createElement('div')
+            wrapper.classList.add('topic-block');
+            
+            let article = document.createElement('article');
+            
+            let header  = document.createElement('h3');
+            header.classList.add('title');
+            header.innerHTML = title;
+
+            let p = document.createElement('p');
+            p.innerHTML = content;
+
+            let footer = document.createElement('div');
+            let readMore = document.createElement('a');
+            readMore.innerHTML = 'Read More';
+            readMore.setAttribute('href', '#');
+            footer.appendChild(readMore);
+    
+            let line = document.createElement('span');
+            line.classList.add('line');
+
+            article.appendChild(header);
+            article.appendChild(p);
+            article.appendChild(footer);
+            
+            wrapper.appendChild(article);
+            wrapper.appendChild(line);
+            
+            topicsDiv.appendChild(wrapper);
+        };
+
+        const loadTopics = () => {
+            page += 1;
+            let xhr = new XMLHttpRequest();
+            /*
+            xhr.onload = () => {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        alert (xhr.responseText);
+                    }
+                }
+            }
+            */
+            xhr.open('get','/topics?page=2', false)
+            xhr.send(null);
+            if (xhr.status === 200) {
+                let resp = JSON.parse(xhr.responseText);
+                console.log(resp);
+                for(let el of resp) {
+                    console.log(el);
+                    createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes);
+                }
+            }
+        };
+        btn.addEventListener('click',loadTopics);
+
+            /*
+            $.ajax({
+                type: 'get',
+                url: '/topics',
+                data: {
+                    page: page
+                },
+                success: (resp)=> { 
+                    console.log(resp);
+                 },
+
+            });
+            */
+
+    </script>
+
 {% endblock %}

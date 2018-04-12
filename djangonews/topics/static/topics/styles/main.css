@@ -104,27 +104,25 @@ main.base-main {
     color: inherit;
 }
 
-.topics-list .pagination {
+.topics-list-wrapper .pagination {
     width: 100%;
     height: 50px;
-    background-color: #f5eeee;
     text-align: center;
-    padding-top:10px;
-    cursor: pointer;
 }
 
-.topics-list .pagination:hover {
-    background-color: #f5c4c4;
-    border: 1px solid black;
-}
 
-.topics-list .pagination .link {
-    text-decoration: none;
+.topics-list-wrapper .pagination .more-btn {
+    border: none;
+    background-color: #f5eeee;
     font-size: 30px;
     width: 100%;
     height: 100%;
     display: block;
     color: #5a72bd;
+}
+.topics-list-wrapper .pagination .more-btn:hover {
+    background-color: #f5c4c4;
+    border: 1px solid black;
 }
 
 .topic-detail-wrapper .line {

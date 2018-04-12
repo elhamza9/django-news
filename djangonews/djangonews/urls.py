@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
 
 from . import views
+from topics.views import list_topics
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,5 @@ urlpatterns = [
     path('login', LoginView.as_view(template_name='auth/login.html'), name='user_login'),
     path('logout', LogoutView.as_view(), name='user_logout'),
     path('oauth/', include('social_django.urls', namespace='social')),  # for Facebook Auth
-    path('',views.welcome, name='site_index')
+    path('',list_topics, name='site_index')
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.list import ListView
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
@@ -11,20 +11,22 @@ from django.utils import timezone
 
 # Create your views here.
 
-
 def list_topics(request):
     sorting_type = request.GET.get('sort', 'recent')
     if sorting_type == 'recent' or (sorting_type != 'recent' and sorting_type != 'rated') :
         topic_list = Topic.objects.all()
     else:
         topic_list = Topic.objects.order_by('-nbr_upvotes')
-    
+
     # Pagination
     paginator = Paginator(topic_list, 2)
-    page = request.GET.get('page')
+    page = request.GET.get('page','1')
     topics = paginator.get_page(page)
-
-    return render(request, 'topics/list.html', {'topics': topics})
+    
+    if page == '1':
+        return render(request, 'topics/list.html', {'topics': topics})
+    else:
+        return JsonResponse(list(topics.object_list.values()), safe=False)
 
 def detail_topic(request, slug=''):
     try:
