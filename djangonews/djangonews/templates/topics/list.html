@@ -30,7 +30,7 @@
     
     <script>
         let page = 1;
-        let pageCount = document.getElementById('page-count').value;
+        let pageCount =parseInt(document.getElementById('page-count').value);
 
         btn = document.getElementById('more-btn');
         let topicsDiv = document.getElementsByClassName('topics-list')[0];
@@ -84,6 +84,9 @@
                         }
                         btn.classList.remove('loading');
                         btn.innerHTML = 'More';
+                        if ( page === pageCount ) {
+                            document.getElementsByClassName('pagination')[0].style.display = 'none';
+                        }
                     }
                 }
             }
