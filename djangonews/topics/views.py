@@ -57,7 +57,7 @@ def detail_topic(request, slug=''):
             'author_name': topic.author.get_username(),
             'comments': topic.comments.all(),
             'nbr_upvotes': topic.nbr_upvotes,
-            'nbr_comments': len(topic.comments.all()),
+            'nbr_comments': topic.nbr_comments,
             'upvoted': user_upvoted_topic,
             'upvote_form_url': 'upvote_topic' if user_upvoted_topic == False else 'cancel_upvote_topic',
             'comment_form': None if request.user.is_authenticated == False else CommentForm(),
