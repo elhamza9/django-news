@@ -53,6 +53,7 @@ def detail_topic(request, slug=''):
             'nbr_upvotes': topic.nbr_upvotes,
             'nbr_comments': len(topic.comments.all()),
             'upvoted': user_upvoted_topic,
+            'upvote_form_url': 'upvote_topic' if user_upvoted_topic == False else 'cancel_upvote_topic',
             'comment_form': None if request.user.is_authenticated == False else CommentForm(),
             'upvote_form': None if request.user.is_authenticated == False else UpvoteForm() })
 
@@ -84,14 +85,14 @@ def upvote_topic(request, id_topic=0):
         assert user.is_authenticated == True
     except AssertionError:
         return redirect('user_login')
-    
+
     topic = get_object_or_404(Topic, pk=id_topic)
     try:
         res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
         assert len(res) == 0
     except AssertionError:
         return redirect('detail_topic', slug=topic.slug)
-    
+
     upvote = Upvote(upvoter=user, topic=topic, timestamp=timezone.now())
     form = UpvoteForm(instance=upvote, data=request.POST)
     if form.is_valid():
@@ -99,6 +100,13 @@ def upvote_topic(request, id_topic=0):
         return redirect('detail_topic', slug=topic.slug)
     else:
         raise Http404('Form invalid')
+
+def upvote_topic_cancel(request, id_topic=0):
+    topic = get_object_or_404(Topic, pk=id_topic)
+    res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=request.user))
+    assert len(res) == 1
+    res[0].delete()
+    return redirect('detail_topic', slug=topic.slug)
 
 def add_topic(request):
     if request.method == 'POST':

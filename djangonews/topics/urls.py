@@ -8,4 +8,5 @@ urlpatterns = [
     path('<str:slug>', views.detail_topic, name='detail_topic'),
     path('<int:id_topic>/comments', views.submit_comment, name='submit_comment'),
     path('<int:id_topic>/upvote', views.upvote_topic, name='upvote_topic'),
+    path('<int:id_topic>/upvote/cancel', views.upvote_topic_cancel, name='cancel_upvote_topic'),
 ]

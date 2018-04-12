@@ -23,7 +23,7 @@
         <div>
             <span>Do you like this Topic ?</span>
             <div class="upvote">
-                <form action="{% url 'upvote_topic' id_topic=id %}" method="post">
+                <form action="{% url upvote_form_url id_topic=id %}" method="post">
                     {% csrf_token %}
                     {% if upvote_form != None %}
                         {{ upvote_form }}
