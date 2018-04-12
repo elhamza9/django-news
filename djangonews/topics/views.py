@@ -73,6 +73,12 @@ def submit_comment(request, id_topic=0):
     else:
         raise Http404('Form invalid')
 
+def delete_comment(request, id_comment=0):
+    comment = get_object_or_404(Comment, pk=id_comment)
+
+    comment.delete()
+    return redirect('detail_topic', slug=comment.topic.slug)
+
 
 def upvote_topic(request, id_topic=0):
     try:

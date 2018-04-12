@@ -48,7 +48,7 @@
                     </div>
                     {% if c.author == user %}
                     <footer>
-                        <a class="link" href="#">[delete comment]</a>
+                        <a class="link" href="{% url 'delete_comment' id_comment=c.id %}">[delete comment]</a>
                     </footer>
                     {% endif %}
                 </div>
