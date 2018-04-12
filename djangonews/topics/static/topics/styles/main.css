@@ -127,14 +127,31 @@ main.base-main {
     color: #5a72bd;
 }
 
+.topic-detail-wrapper .line {
+    display: block;
+    width: 50%;
+    height: 1px;
+    background-color: black;
+    margin-top: 10px;
+}
+
+
+
 .topic-detail-wrapper .topic-detail header .title {
     margin-bottom: 6px;
 }
+
+.topic-detail header {
+    padding: 20px 5px;
+}
+
 .topic-detail-wrapper .topic-detail header .detail span {
     display: block;
 }
+
 .topic-detail-wrapper .topic-detail .content {
     margin-top: 35px;
+    font-size: 18px;
 }
 
 .topic-detail-wrapper .comments .title {
@@ -142,8 +159,16 @@ main.base-main {
     margin: 5px;
 }
 
+.topic-detail-wrapper .upvotes {
+    margin-top: 20px;
+}
+
 .topic-detail-wrapper .upvotes .upvote {
     display: inline-block;
+}
+
+.topic-detail-wrapper .upvotes .upvote form {
+    margin-bottom: 0;
 }
 
 .topic-detail-wrapper .upvotes .upvote button {
