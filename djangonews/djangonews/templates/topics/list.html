@@ -22,6 +22,7 @@
 <div class="pagination">
     <button id="more-btn" class="more-btn" type="button">More</button>
 </div>
+<input id="page-count" type="hidden" value="{{page_count}}"/>
 </div>
 {% endblock %}
 
@@ -29,6 +30,8 @@
     
     <script>
         let page = 1;
+        let pageCount = document.getElementById('page-count').value;
+
         btn = document.getElementById('more-btn');
         let topicsDiv = document.getElementsByClassName('topics-list')[0];
 
@@ -66,6 +69,9 @@
 
         const loadTopics = () => {
             page += 1;
+            if (page > pageCount) {
+                return;
+            }
             let xhr = new XMLHttpRequest();
             xhr.onload = () => {
                 if (xhr.readyState === 4) {
