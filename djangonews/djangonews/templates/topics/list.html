@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block js %}
-    
+
     <script>
         let page = 1;
         let pageCount =parseInt(document.getElementById('page-count').value);
@@ -83,7 +83,6 @@
                         let resp = JSON.parse(xhr.responseText);
                         console.log(resp);
                         for (let el of resp) {
-                            console.log(el);
                             createArticle(el.id, el.title, el.slug, el.content, el.published_at, el.nbr_upvotes);
                         }
                         btn.classList.remove('loading');
