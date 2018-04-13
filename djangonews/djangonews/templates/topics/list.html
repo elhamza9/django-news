@@ -3,29 +3,22 @@
 {% block title %} Topics Feed {% endblock %}
 
 {% block content %}
+
 <div class="topics-list-wrapper" >
+<div class="sort-filter-wrapper">
+        <label>Most Recent</label>
+        <input type="radio" name="sort" value="recent" class="sort-filter-radio"/>
+        <label>Most Rated</label>
+        <input type="radio" name="sort" value="rated" class="sort-filter-radio"/>
+</div>
 <div class="topics-list">
     <span class="line"></span>
-{% for t in topics %}
-    <div class="topic-block">
-        <!-- 
-            <article>
-            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }}</a></h3>
-            <span class="detail">( {{ t.nbr_comments }} comments, {{ t.nbr_upvotes }} upvotes )</span>
-            <p> {{ t.content | truncatechars:200 }}</p>
-            <div>
-                <a href="{% url 'detail_topic' slug=t.slug %}">Read More</a>
-            </div>
-        </article>
-        <span class="line"></span>
-        -->
-    </div>
-{% endfor %}
 </div>
 <div class="pagination">
-    <button id="more-btn" class="more-btn" type="button">More</button>
+    <button id="more-btn" class="more-btn" type="button" onclick="loadTopics">More</button>
 </div>
 <input id="page-count" type="hidden" value="{{page_count}}"/>
+<input id="sort-type" type="hidden" value="{{sort_type}}"/>
 </div>
 {% endblock %}
 
@@ -33,9 +26,11 @@
 
     <script>
         let page = 0;
-        let pageCount =parseInt(document.getElementById('page-count').value);
+        let pageCount = parseInt(document.getElementById('page-count').value);
+        let sortType = document.getElementById('sort-type').value;
 
-        btn = document.getElementById('more-btn');
+        let btn = document.getElementById('more-btn');
+        let sortRadios = document.getElementsByClassName('sort-filter-radio');
         let topicsDiv = document.getElementsByClassName('topics-list')[0];
 
         const createArticle = ( id, title, slug, content, time, nbrUpvotes, nbrComments ) => {
@@ -101,12 +96,33 @@
                     }
                 }
             }
-            xhr.open('get','/topics?page='+page, true)
+            xhr.open('get','/topics?page='+page+'&sort='+sortType, true)
             xhr.send(null);
             btn.classList.add('loading');
             btn.innerHTML = 'Loading ...';
         };
-        btn.addEventListener('click',loadTopics);
+
+
+        const sortChangeHandler = (ev) => {
+            if (ev.target.value !== sortType) {
+                alert('Resorting ...');
+                while(topicsDiv.firstChild) {
+                    topicsDiv.removeChild(topicsDiv.firstChild);
+                }
+                sortType = ev.target.value;
+                page = 0;
+                loadTopics();
+            }
+        };
+
+        for (let radio of sortRadios) {
+            radio.addEventListener('change', sortChangeHandler);
+            if (radio.value === sortType) {
+                radio.checked = true;
+            }
+        }
+
+
 
         loadTopics();
 

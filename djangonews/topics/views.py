@@ -14,6 +14,7 @@ from django.utils import timezone
 def list_topics(request):
     sorting_type = request.GET.get('sort', 'recent')
     if sorting_type == 'recent' or (sorting_type != 'recent' and sorting_type != 'rated') :
+        sorting_type = 'recent'
         topic_list = Topic.objects.all()
     else:
         topic_list = Topic.objects.order_by('-nbr_upvotes')
@@ -27,7 +28,7 @@ def list_topics(request):
 
     topics_page = paginator.get_page(page)
     if int(page) == 0:
-        return render(request, 'topics/list.html', {'topics': topics_page, 'page_count': page_count})
+        return render(request, 'topics/list.html', {'topics': topics_page, 'page_count': page_count, 'sort_type': sorting_type})
     else:
         return JsonResponse(list(topics_page.object_list.values()), safe=False)
 

@@ -82,6 +82,10 @@ main.base-main {
     padding-right: 100px;
 }
 
+.topics-list .sort-filter-wrapper .sort-filter-radio {
+    cursor: pointer;
+} 
+
 .topics-list .line {
     display: block;
     width: 100%;
