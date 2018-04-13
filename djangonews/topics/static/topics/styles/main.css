@@ -82,10 +82,6 @@ main.base-main {
     padding-right: 100px;
 }
 
-.topics-list .topic-block {
-    margin-bottom: 10px;
-}
-
 .topics-list .line {
     display: block;
     width: 100%;
@@ -94,9 +90,17 @@ main.base-main {
     margin-top: 10px;
 }
 
+.topics-list .topic-block {
+    margin: 20px;
+}
+
 .topics-list .topic-block .title {
     color: black;
     font-size: 30px;
+    margin: 5px;
+}
+.topics-list .topic-block .detail {
+    margin-left: 40px;
 }
 
 .topics-list .topic-block .link {
@@ -147,8 +151,12 @@ main.base-main {
     padding: 20px 5px;
 }
 
-.topic-detail-wrapper .topic-detail header .detail span {
+ header .detail{
     display: block;
+    font-style: italic;
+}
+header .detail .author, .detail .date {
+    color: green;
 }
 
 .topic-detail-wrapper .topic-detail .content {
@@ -204,6 +212,10 @@ main.base-main {
     border: 1px solid black;
     margin: 5px;
     padding: 4px;
+}
+
+.topic-detail-wrapper .comments .comment .content {
+    margin-left: 50px;
 }
 
 .topic-detail-wrapper .comments .comment footer {

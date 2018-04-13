@@ -8,7 +8,7 @@
         <header>
             <h1 class="title">{{ title }}</h1>
             <div class="detail">
-                <span class="date">Posted {{ published_at }} by {{ author_name }}</span>
+                <span class="detail">Posted <span class="date">{{ published_at }}</span> by <span class="author">{{ author_name }}</span></span>
             </div>
         </header>
     <span class="line"></span>
@@ -41,7 +41,7 @@
             <li>
                 <div class="comment">
                     <header>
-                        <span class="detail">{{ c.author }} at {{ c.published_at }}</span>
+                        <span class="detail"><span class="author">{{ c.author }}</span> at <span class="date">{{ c.published_at }}</span></span>
                     </header>
                     <div class="content">
                         <p> {{ c.content }} </p>

@@ -8,14 +8,17 @@
     <span class="line"></span>
 {% for t in topics %}
     <div class="topic-block">
-        <article>
-            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }} ({{ t.nbr_comments }})</a></h3>
-            <p> {{ t.content }}</p>
+        <!-- 
+            <article>
+            <h3 class="title"><a class="link" href="{% url 'detail_topic' slug=t.slug %}">{{ t.title }}</a></h3>
+            <span class="detail">( {{ t.nbr_comments }} comments, {{ t.nbr_upvotes }} upvotes )</span>
+            <p> {{ t.content | truncatechars:200 }}</p>
             <div>
                 <a href="{% url 'detail_topic' slug=t.slug %}">Read More</a>
             </div>
         </article>
         <span class="line"></span>
+        -->
     </div>
 {% endfor %}
 </div>
@@ -29,7 +32,7 @@
 {% block js %}
 
     <script>
-        let page = 1;
+        let page = 0;
         let pageCount =parseInt(document.getElementById('page-count').value);
 
         btn = document.getElementById('more-btn');
@@ -38,19 +41,23 @@
         const createArticle = ( id, title, slug, content, time, nbrUpvotes, nbrComments ) => {
             let wrapper = document.createElement('div')
             wrapper.classList.add('topic-block');
-            
+
             let article = document.createElement('article');
-            
+
             let header  = document.createElement('h3');
             header.classList.add('title');
             let link = document.createElement('a');
             link.classList.add('link');
-            link.innerHTML = title + ' (' + nbrComments + ')';
-            link.setAttribute('href', '/topics/'+slug);
+            link.innerHTML = title;
+            link.setAttribute('href', '/topics/' + slug);
             header.appendChild(link);
 
+            let detail = document.createElement('span');
+            detail.classList.add('detail');
+            detail.innerHTML = `( ${nbrComments} comment${nbrComments > 1 ? 's' : ''}, ${nbrUpvotes} upvote${nbrUpvotes > 1 ? 's' : ''} )`;
+
             let p = document.createElement('p');
-            p.innerHTML = content;
+            p.innerHTML = content.length > 200 ? (content.substring(0,200) + '...')  : content;
 
             let footer = document.createElement('div');
             let readMore = document.createElement('a');
@@ -62,6 +69,7 @@
             line.classList.add('line');
 
             article.appendChild(header);
+            article.appendChild(detail);
             article.appendChild(p);
             article.appendChild(footer);
             
@@ -99,6 +107,8 @@
             btn.innerHTML = 'Loading ...';
         };
         btn.addEventListener('click',loadTopics);
+
+        loadTopics();
 
     </script>
 

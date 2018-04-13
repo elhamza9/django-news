@@ -21,16 +21,15 @@ def list_topics(request):
     # Pagination
     paginator = Paginator(topic_list, 2)
     page_count = paginator.num_pages
-    page = request.GET.get('page','1')
+    page = request.GET.get('page', '0')
     if int(page) > page_count:
         raise Http404('No more pages')
-    
-    topics = paginator.get_page(page)
-    
-    if page == '1':
-        return render(request, 'topics/list.html', {'topics': topics, 'page_count': page_count})
+
+    topics_page = paginator.get_page(page)
+    if int(page) == 0:
+        return render(request, 'topics/list.html', {'topics': topics_page, 'page_count': page_count})
     else:
-        return JsonResponse(list(topics.object_list.values()), safe=False)
+        return JsonResponse(list(topics_page.object_list.values()), safe=False)
 
 def detail_topic(request, slug=''):
     try:
