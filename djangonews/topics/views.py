@@ -19,7 +19,7 @@ def list_topics(request):
         topic_list = Topic.objects.order_by('-nbr_upvotes')
 
     # Pagination
-    paginator = Paginator(topic_list, 2)
+    paginator = Paginator(topic_list, 20)
     page_count = paginator.num_pages
     page = request.GET.get('page', '0')
     if int(page) > page_count:
