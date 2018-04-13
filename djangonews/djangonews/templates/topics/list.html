@@ -15,7 +15,7 @@
     <span class="line"></span>
 </div>
 <div class="pagination">
-    <button id="more-btn" class="more-btn" type="button" onclick="loadTopics">More</button>
+    <button id="more-btn" class="more-btn" type="button" onclick="loadTopics()">More</button>
 </div>
 <input id="page-count" type="hidden" value="{{page_count}}"/>
 <input id="sort-type" type="hidden" value="{{sort_type}}"/>
@@ -79,6 +79,7 @@
             if (page > pageCount) {
                 return;
             }
+            alert ('loading ' + page);
             let xhr = new XMLHttpRequest();
             xhr.onload = () => {
                 if (xhr.readyState === 4) {
