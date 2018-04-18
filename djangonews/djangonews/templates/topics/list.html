@@ -79,7 +79,7 @@
             if (page > pageCount) {
                 return;
             }
-            alert ('loading ' + page);
+            //alert ('loading ' + page);
             let xhr = new XMLHttpRequest();
             xhr.onload = () => {
                 if (xhr.readyState === 4) {
@@ -106,7 +106,7 @@
 
         const sortChangeHandler = (ev) => {
             if (ev.target.value !== sortType) {
-                alert('Resorting ...');
+                //alert('Resorting ...');
                 while(topicsDiv.firstChild) {
                     topicsDiv.removeChild(topicsDiv.firstChild);
                 }
