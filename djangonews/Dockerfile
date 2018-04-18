@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM alpine:3.7
 
 ENV SRC="/usr/src/djangonews"
 
@@ -9,16 +9,9 @@ ENV SOCIAL_AUTH_FB_SECRET='f0b775772b7071cde8df21474ea325cb'
 
 MAINTAINER Hamza
 
-RUN apt update && apt -y upgrade
-
-# Python Stuff
-RUN apt install -y python3 && apt install -y python3-pip
-
-# DB STUFF
-RUN apt install -y sqlite
-
-# Other
-RUN apt install -y vim
+RUN apk update && \
+    apk add  python3 && \
+    apk add  sqlite
 
 # Copy Content
 RUN mkdir -p $SRC
@@ -28,6 +21,6 @@ COPY . .
 # Install pip requirements
 RUN pip3 install -r ./requirements.pip
 
-EXPOSE 8000
+#EXPOSE 8000
 
-ENTRYPOINT ["./entry.sh"]
+ENTRYPOINT ["ash", "./entry.sh"]
