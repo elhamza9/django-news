@@ -3,4 +3,4 @@
 
 __pycache__/
 
-djangonews/db.sqlite3
+djangonews/db/db.sqlite3
