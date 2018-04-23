@@ -1,22 +1,34 @@
 FROM alpine:3.7
 
-MAINTAINER Hamza El
-
 ENV SRC="/usr/src/djangonews" \
-    USED_DOMAIN="ec2-54-200-24-133.us-west-2.compute.amazonaws.com" \
-    DJANGO_SECRET_KEY='par^7+km)=_5($^z*=i8-m5+1!e^&+=&6cbh3@yhm!xzyn(iu!' \
-    SOCIAL_AUTH_FB_KEY='101886774002287' \
-    SOCIAL_AUTH_FB_SECRET='f0b775772b7071cde8df21474ea325cb'
+    USED_DOMAIN="app-server" \
+    DB_HOST="db-server" \
+    DB_PORT="5432" \
+    STATIC_PATH="/var/www/djangonews/static" \
+    DJANGO_SECRET_KEY="par^7+km)=_5($^z*=i8-m5+1!e^&+=&6cbh3@yhm!xzyn(iu!" \
+    SOCIAL_AUTH_FB_KEY="101886774002287" \
+    SOCIAL_AUTH_FB_SECRET="f0b775772b7071cde8df21474ea325cb"
 
-# Copy Content
-RUN mkdir -p $SRC
+# Install updates & Essential Packages
+RUN apk update && apk add python3
+RUN apk add python3-dev gcc musl-dev postgresql-dev
+
+# Create User & directories
+RUN addgroup -S djangonews && \
+    adduser -S -G djangonews djangonews
+
+# Create Dirs and Users
+RUN mkdir -p $SRC && mkdir -p $STATIC_PATH && \
+    chown -R djangonews:djangonews $SRC && chown -R djangonews:djangonews $STATIC_PATH
+
+# Copy Code
 WORKDIR $SRC
 COPY . .
 
-RUN apk update && \
-    apk add python3 && \
-    apk add  sqlite && \
-    pip3 install -r ./requirements.pip
+# Install pip requirements
+RUN pip3 install -r ./requirements.pip
+
+USER djangonews
 
 EXPOSE 8000
 
