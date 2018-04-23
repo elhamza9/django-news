@@ -84,8 +84,17 @@ WSGI_APPLICATION = 'djangonews.wsgi.application'
 
 DATABASES = {
     'default': {
-       'ENGINE': 'django.db.backends.sqlite3',
-       'NAME': os.path.join(BASE_DIR, 'db/db.sqlite3'),
+#  SQLite
+#      'ENGINE': 'django.db.backends.sqlite3',
+#      'NAME': os.path.join(BASE_DIR, 'db/db.sqlite3'),
+#  Postgres
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'djangonews_db',
+        'USER': 'djangonews',
+        'PASSWORD': 'djangonewspass',
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT')
+#  MySQL
 #        'ENGINE': 'django.db.backends.mysql',
 #        'NAME': 'djangonews_db',
 #        'USER': 'django',
@@ -148,7 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.environ.get('STATIC_PATH')
 
-
-LOGIN_REDIRECT_URL = 'list_topics'
+LOGIN_REDIRECT_URL = 'site_index'
 LOGOUT_REDIRECT_URL = 'site_index'
