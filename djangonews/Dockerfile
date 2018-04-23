@@ -10,15 +10,13 @@ ENV SRC="/usr/src/djangonews" \
     SOCIAL_AUTH_FB_SECRET="f0b775772b7071cde8df21474ea325cb"
 
 # Install updates & Essential Packages
-RUN apk update && apk add python3
-RUN apk add python3-dev gcc musl-dev postgresql-dev
+RUN apk update && apk add python3 && \
+    apk add python3-dev gcc musl-dev postgresql-dev
 
 # Create User & directories
 RUN addgroup -S djangonews && \
-    adduser -S -G djangonews djangonews
-
-# Create Dirs and Users
-RUN mkdir -p $SRC && mkdir -p $STATIC_PATH && \
+    adduser -S -G djangonews djangonews && \
+    mkdir -p $SRC && mkdir -p $STATIC_PATH && \
     chown -R djangonews:djangonews $SRC && chown -R djangonews:djangonews $STATIC_PATH
 
 # Copy Code
