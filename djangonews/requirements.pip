@@ -4,4 +4,5 @@ social-auth-core==1.7.0
 social-auth-app-django==2.1.0
 pytest==3.5.0
 pytest-django==3.2.1
+model-mommy==1.5.1
 gunicorn==19.7.1
