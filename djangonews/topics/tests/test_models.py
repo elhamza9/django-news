@@ -16,6 +16,10 @@ def topic_fixture():
     "Provides a single Topic object"
     return mommy.make('topics.Topic')
 
+@pytest.fixture
+def comment_fixture():
+    "Provides a single Comment object"
+    return mommy.make('topics.Comment')
 
 '''
     Test Topic Model Behaviour
@@ -59,8 +63,8 @@ class TestTopic:
 '''
 class TestComment:
 
-    def test_str(self, comment):
-        assert str(comment) == comment.content[:10]
+    def test_str(self, comment_fixture):
+        assert str(comment_fixture) == comment_fixture.content[:10]
 
     def test_nbr_comments_increments(self, topic_fixture):
         '''
