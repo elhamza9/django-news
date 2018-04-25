@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    web-server:
+        build: ./web-server
+        ports:
+            - 8000:80
+        depends_on:
+            - app-server
+        volumes:
+            - static_vol:/var/www/djangonews
+    db-server:
+        image: postgres:alpine
+        environment:
+            - POSTGRES_DB=djangonews_db
+            - POSTGRES_USER=djangonews
+            - POSTGRES_PASSWORD=djangonewspass
+        volumes:
+            - db_vol:/var/lib/postgresql/data
+    app-server:
+        build: ./djangonews
+        depends_on:
+            - db-server
+        volumes:
+            - static_vol:/var/www/djangonews
+
+volumes:
+    db_vol:
+    static_vol:
