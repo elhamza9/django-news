@@ -121,6 +121,11 @@ def upvote_topic_cancel(request, id_topic=0):
     return redirect('detail_topic', slug=topic.slug)
 
 def add_topic(request):
+    try:
+        assert request.user.is_authenticated == True
+    except AssertionError:
+        return redirect('user_login')
+
     if request.method == 'POST':
         topic = Topic(author=request.user)
         form = TopicForm(instance=topic, data=request.POST)

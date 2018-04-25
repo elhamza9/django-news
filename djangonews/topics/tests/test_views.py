@@ -1,5 +1,5 @@
 import pytest
-from django.test import RequestFactory
+from django.test import RequestFactory, Client
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
 
@@ -12,6 +12,10 @@ pytestmark = pytest.mark.django_db
 @pytest.fixture
 def req_factory():
     return RequestFactory()
+
+@pytest.fixture
+def client():
+    return Client()
 
 
 def test_list_topics_recent():
@@ -29,14 +33,13 @@ def test_detail_topic(req_factory):
     resp = views.add_topic(req)
     assert resp.status_code == 200 , 'View Should return 200'
 
-def test_add_topic_anonymous_redirect_to_login(req_factory):
+def test_add_topic_anonymous_redirect_to_login(client):
     '''
         Test that anonymous user can't access add_topic view
     '''
-    req = req_factory.get(reverse('add_topic'))
-    req.user = AnonymousUser()
-    resp = views.add_topic(req)
-    assert 'login' in resp.url , 'View should redirect us to login'
+    resp = client.get(reverse('add_topic'), follow=True)
+    last_url, code = resp.redirect_chain[-1]
+    assert last_url == reverse('user_login')
 
 def test_add_topic_authenticated(req_factory):
     '''
