@@ -1,7 +1,7 @@
 ## Django News
-This is a mini project to learn the Django Framework
+This is a mini project to learn the Django Framework , Docker & docker-compose
 
-### Description
+### Description of the Django App
 - The User signs up/in using Facebook
 - User can submit a new Topic
 - User can upvote a Topic
