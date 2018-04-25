@@ -2,7 +2,7 @@ import pytest
 
 from django.test import RequestFactory, Client
 from django.urls import reverse
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser, User
 from django.http.response import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -20,6 +20,7 @@ def req_factory():
 @pytest.fixture
 def client():
     return Client()
+
 
 
 @pytest.mark.skip
@@ -101,6 +102,30 @@ def test_anonymous_cant_delete_comment(req_factory):
     with pytest.raises(Http404):
         resp = views.delete_comment(req, c.id)
 
-@pytest.mark.skip
-def test_upvote_submit_anonymous_redirect_to_login(req_factory):
-    assert 1 == 0
+
+def test_anonymous_upvote_is_redirected_to_login(client):
+    '''
+        Test that anonymous user can't upvote
+    '''
+    t = mommy.make('topics.Topic')
+    resp = client.post(reverse('upvote_topic', kwargs={'id_topic': t.id}), follow=True)
+    last_url, code = resp.redirect_chain[-1]
+    assert code == 302
+    assert last_url == reverse('user_login')
+
+def test_redirect_when_user_tries_to_upvote_two_times(client):
+    '''
+        Test that authenticated user will be redirected to topic page
+        when he/she tries to upvote topic more than one time
+    '''
+    plain_pass = 'mysecurepass'
+    u = User.objects.create_user(username='dummy', password=plain_pass)
+    t = mommy.make('topics.Topic')
+    logged = client.login(username=u.get_username(), password=plain_pass)
+    assert logged == True
+    resp = client.post(reverse('upvote_topic', kwargs={'id_topic': t.id}), follow=True)
+    assert resp.status_code == 200
+    resp = client.post(reverse('upvote_topic', kwargs={'id_topic': t.id}), follow=True)
+    last_url, code = resp.redirect_chain[-1]
+    assert code == 302
+    assert last_url == reverse('detail_topic',kwargs={'slug': t.slug})

@@ -85,7 +85,6 @@ def submit_comment(request, id_topic=0):
         raise Http404('Form invalid')
 
 def delete_comment(request, id_comment=0):
-    print('ID comment : {}'.format(id_comment))
     comment = get_object_or_404(Comment, id=id_comment)
     try:
         assert comment.author == request.user
