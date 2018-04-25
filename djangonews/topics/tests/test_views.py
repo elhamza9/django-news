@@ -1,11 +1,15 @@
 import pytest
+
 from django.test import RequestFactory, Client
 from django.urls import reverse
 from django.contrib.auth.models import AnonymousUser
+from django.http.response import Http404
+from django.core.exceptions import ObjectDoesNotExist
 
 from model_mommy import mommy
 
 from topics import views
+from topics.models import Topic, Comment, Upvote
 
 pytestmark = pytest.mark.django_db
 
@@ -18,19 +22,22 @@ def client():
     return Client()
 
 
+@pytest.mark.skip
 def test_list_topics_recent():
     assert 1 == 0
 
+@pytest.mark.skip
 def test_list_topics_rated():
     assert 1 == 0
 
 def test_detail_topic(req_factory):
     '''
-        Test Detail Topic View
+        Test Anonymous user access Detail Topic View
     '''
     t = mommy.make('topics.Topic')
     req = req_factory.get(reverse('detail_topic',kwargs={'slug':t.slug}))
-    resp = views.add_topic(req)
+    req.user = AnonymousUser()
+    resp = views.detail_topic(req, t.slug)
     assert resp.status_code == 200 , 'View Should return 200'
 
 def test_add_topic_anonymous_redirect_to_login(client):
@@ -58,8 +65,42 @@ def test_comment_submit_anonymous_redirect_to_login(client):
     last_url, code = resp.redirect_chain[-1]
     assert last_url == reverse('user_login')
 
-def test_comment_delete():
-    assert 1 == 0
+def test_user_can_delete_his_comment(req_factory):
+    '''
+        Test that user can delete his own comment
+    '''
+    u = mommy.make('User')
+    c = mommy.make('topics.Comment', author=u)
+    req = req_factory.get(reverse('delete_comment', kwargs={'id_comment': c.id}))
+    req.user = u
+    resp = views.delete_comment(req, c.id)
+    #assert resp.status_code == 200
+    with pytest.raises(ObjectDoesNotExist):
+        Comment.objects.get(id=c.id)
 
+def test_user_cant_delete_comment_of_another_user(req_factory):
+    '''
+        Test that 404 Exception gets raised when
+        user tries to delete another one's comment
+    '''
+    users = mommy.make('User', _quantity=2)
+    c = mommy.make('topics.Comment', author=users[0])
+    req = req_factory.get(reverse('delete_comment', kwargs={'id_comment': c.id}))
+    req.user = users[1]
+    with pytest.raises(Http404):
+        resp = views.delete_comment(req, c.id)
+
+def test_anonymous_cant_delete_comment(req_factory):
+    '''
+        Test that 404 Exception gets raised when
+        anonymous user tries to delete a comment
+    '''
+    c = mommy.make('topics.Comment')
+    req = req_factory.get(reverse('delete_comment', kwargs={'id_comment': c.id}))
+    req.user = AnonymousUser()
+    with pytest.raises(Http404):
+        resp = views.delete_comment(req, c.id)
+
+@pytest.mark.skip
 def test_upvote_submit_anonymous_redirect_to_login(req_factory):
     assert 1 == 0

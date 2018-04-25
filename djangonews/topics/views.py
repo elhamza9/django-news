@@ -41,8 +41,8 @@ def detail_topic(request, slug=''):
         raise Http404("Article Not Found !")
 
     topic = res[0]
-    user = request.user
-    if user.is_authenticated == True:
+    user = request.user or None
+    if user != None and user.is_authenticated == True:
         res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
         assert len(res) in (0,1)
         user_upvoted_topic = len(res) == 1
@@ -85,8 +85,12 @@ def submit_comment(request, id_topic=0):
         raise Http404('Form invalid')
 
 def delete_comment(request, id_comment=0):
-    comment = get_object_or_404(Comment, pk=id_comment)
-    assert comment.author == request.user
+    print('ID comment : {}'.format(id_comment))
+    comment = get_object_or_404(Comment, id=id_comment)
+    try:
+        assert comment.author == request.user
+    except AssertionError:
+        raise Http404('Not the same user who commented')
     comment.delete()
     return redirect('detail_topic', slug=comment.topic.slug)
 
