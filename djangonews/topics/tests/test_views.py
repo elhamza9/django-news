@@ -50,14 +50,13 @@ def test_add_topic_authenticated(req_factory):
     resp = views.add_topic(req)
     assert resp.status_code == 200, 'View should return 200 because user is authenticated'
 
-def test_comment_submit_anonymous_redirect_to_login(req_factory):
+def test_comment_submit_anonymous_redirect_to_login(client):
     '''
-        Test that anonymous user can't submit comment
+        Test that anonymous user can't access add_topic view
     '''
-    req = req_factory.get(reverse('submit_comment', kwargs={'id_topic':t.id}))
-    req.user = AnonymousUser()
-    resp = views.submit_comment(req)
-    assert 'login' in resp.url , 'View should redirect us to login'
+    resp = client.post(reverse('submit_comment', kwargs={'id_topic': 0}), follow=True)
+    last_url, code = resp.redirect_chain[-1]
+    assert last_url == reverse('user_login')
 
 def test_comment_delete():
     assert 1 == 0

@@ -68,7 +68,12 @@ def submit_comment(request, id_topic=0):
         assert request.method == 'POST'
     except AssertionError:
         raise Http404("Wrong Method")
-    
+
+    try:
+        assert request.user.is_authenticated == True
+    except AssertionError:
+        return redirect('user_login')
+
     topic = get_object_or_404(Topic, pk=id_topic)
     author = request.user
     comment = Comment(author=author, topic=topic, published_at=timezone.now())
