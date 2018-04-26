@@ -22,12 +22,12 @@
                                     <a class="link" href="{% url 'add_topic' %}">Add a Topic</a>
                             </li>
                             <li>
-                                <a class="link" href="{% url 'user_logout' %}">Logout</a>
+                                <a id="logout-link" class="link" href="{% url 'user_logout' %}">Logout</a>
                             </li>
                         </ul>
                     </div>
                 {% else %}
-                    <a class="link" href="{% url 'user_login' %}">Login</a>
+                    <a id="login-link" class="link" href="{% url 'user_login' %}">Login</a>
                 {% endif %}
             </div>
         </header>

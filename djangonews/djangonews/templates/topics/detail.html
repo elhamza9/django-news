@@ -28,7 +28,7 @@
                     {% if upvote_form != None %}
                         {{ upvote_form }}
                     {% endif %}
-                    <button class="{% if upvoted %} upvoted {% endif %}">Upvote</button>
+                    <button id="upvote-btn" class="{% if upvoted %} upvoted {% endif %}">Upvote</button>
                 </form>
             </div>
             <span>( {{ nbr_upvotes }} )</span>
@@ -60,7 +60,7 @@
                         <form method="post" action="{% url 'submit_comment' id_topic=id %}">
                         {% csrf_token %}
                         {{ comment_form }}
-                        <button type="submit">Publish Comment !</button>
+                        <button id="submit-com-btn" type="submit">Publish Comment !</button>
                         <button type="button" onclick="toggleCommentBox()">Cancel</button>
                     </form>
                 {% else %}
@@ -70,7 +70,7 @@
             </li>
         </ul>
         
-        <button class="write-com-btn" onclick="toggleCommentBox()">Write Comment <span>+</span></button>
+        <button id="write-com-btn" class="write-com-btn" onclick="toggleCommentBox()">Write Comment <span>+</span></button>
     </section>
 </div>
 {% endblock %}
