@@ -71,6 +71,34 @@ class TestTopic:
         assert resp.status_code == 200, 'View should return 200 because user is authenticated'
 
 class TestComment:
+
+    def test_logged_user_submit_comment(self, req_factory):
+        '''
+            Test that a logged user can post a comment on a Topic
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy1', password=plain_pass)
+        t = mommy.make('topics.Topic')
+        req = req_factory.post(reverse('submit_comment', kwargs={'id_topic': t.id}),
+                data= {'content': 'My Comment'})
+        req.user = u
+        resp = views.submit_comment(req, t.id)
+        assert Comment.objects.get(author=u)
+
+    def test_user_cant_submit_empty_comment(self, req_factory):
+        '''
+            Test that a user cant post an empty comment on a Topic
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy2', password=plain_pass)
+        t = mommy.make('topics.Topic')
+        req = req_factory.post(reverse('submit_comment', kwargs={'id_topic': t.id}),
+                data= {'content': ''})
+        req.user = u
+        with pytest.raises(Http404):
+            resp = views.submit_comment(req, t.id)
+
+
     def test_anonymous_comment_is_redirected_to_login(self, client):
         '''
             Test that anonymous user can't access add_topic view
@@ -132,7 +160,7 @@ class TestUpvote:
             when he/she tries to upvote topic more than one time
         '''
         plain_pass = 'mysecurepass'
-        u = User.objects.create_user(username='dummy', password=plain_pass)
+        u = User.objects.create_user(username='dummy2', password=plain_pass)
         t = mommy.make('topics.Topic')
         logged = client.login(username=u.get_username(), password=plain_pass)
         assert logged == True
