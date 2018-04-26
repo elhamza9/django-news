@@ -2,4 +2,4 @@ image: hamzael/django-test:latest
 
 test:
   script:
-    - pytest
+    - cd djangonews/djangonews/; pytest
