@@ -23,15 +23,16 @@ def client():
 
 
 
-@pytest.mark.skip
-def test_list_topics_recent():
-    assert 1 == 0
-
-@pytest.mark.skip
-def test_list_topics_rated():
-    assert 1 == 0
-
 class TestTopic:
+
+    def test_list_topics_view(self, req_factory):
+        '''
+            Test list_topic view
+        '''
+        req = req_factory.get(reverse('site_index'))
+        resp = views.list_topics(req)
+        assert resp.status_code == 200
+
     def test_detail_topic(self, req_factory):
         '''
             Test Anonymous user access Detail Topic View
@@ -53,7 +54,7 @@ class TestTopic:
         with pytest.raises(Http404):
             resp = views.detail_topic(req, wrong_slug)
 
-    def test_add_topic_anonymous_redirect_to_login(self, client):
+    def test_anonymous_add_topic_view_redirected_to_login(self, client):
         '''
             Test that anonymous user can't access add_topic view
         '''
@@ -61,7 +62,7 @@ class TestTopic:
         last_url, code = resp.redirect_chain[-1]
         assert last_url == reverse('user_login')
 
-    def test_add_topic_authenticated(self, req_factory):
+    def test_add_topic_view_authenticated(self, req_factory):
         '''
             Test that authenticated user can access add_topic view
         '''
@@ -69,6 +70,39 @@ class TestTopic:
         req.user = mommy.make('User')
         resp = views.add_topic(req)
         assert resp.status_code == 200, 'View should return 200 because user is authenticated'
+
+    def test_logged_can_post_topic(self, req_factory):
+        '''
+            Test that a logged user can add a topic
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy1', password=plain_pass)
+        req = req_factory.post(reverse('add_topic'), data={
+            'title': 'My Topic',
+            'slug': 'my-topic',
+            'content': 'My Awesome topic is great. upvote it !'
+        })
+        req.user = u
+        resp = views.add_topic(req)
+        assert Topic.objects.get(slug='my-topic')
+    
+    def test_logged_post_invalid_topic_exception(self, req_factory):
+        '''
+            Test that an exception get raised when a  logged user
+            tries to submit a invalid form to add a topic
+            (it should actually be prevented by javascript, but
+            just in case)
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy1', password=plain_pass)
+        req = req_factory.post(reverse('add_topic'), data={
+            'title': 'My Topic',
+            'slug': '', # No slug !
+            'content': 'My Awesome topic is great. upvote it !'
+        })
+        req.user = u
+        with pytest.raises(Http404):
+            resp = views.add_topic(req)
 
 class TestComment:
 
@@ -144,6 +178,19 @@ class TestComment:
             resp = views.delete_comment(req, c.id)
 
 class TestUpvote:
+
+    def test_logged_user_can_upvote_topic(self, req_factory):
+        '''
+            Test that a logged user can upvote a topic
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy2', password=plain_pass)
+        t = mommy.make('topics.Topic')
+        req = req_factory.post(reverse('upvote_topic', kwargs={'id_topic': t.id}), data={})
+        req.user = u
+        resp = views.upvote_topic(req, t.id)
+        assert Upvote.objects.get(upvoter=u)
+
     def test_anonymous_upvote_is_redirected_to_login(self, client):
         '''
             Test that anonymous user can't upvote
@@ -170,3 +217,31 @@ class TestUpvote:
         last_url, code = resp.redirect_chain[-1]
         assert code == 302
         assert last_url == reverse('detail_topic',kwargs={'slug': t.slug})
+
+    def test_logged_user_can_cancel_upvote(self, req_factory):
+        '''
+            Test that logged user can cancel his upvote
+            his upvote gets deleted from DB
+        '''
+        plain_pass = 'mysecurepass'
+        u = User.objects.create_user(username='dummy2', password=plain_pass)
+        t = mommy.make('topics.Topic')
+        req = req_factory.post(reverse('upvote_topic', kwargs={'id_topic': t.id}), data={})
+        req.user = u
+        resp = views.upvote_topic(req, t.id)
+        assert Upvote.objects.get(upvoter=u)
+        req = req_factory.post(reverse('cancel_upvote_topic', kwargs={'id_topic': t.id}), data={})
+        req.user = u
+        resp = views.upvote_topic_cancel(req, t.id)
+        with pytest.raises(ObjectDoesNotExist):
+            assert Upvote.objects.get(upvoter=u)
+
+    def test_anonymous_cancel_upvote_is_redirected_to_login(self, client):
+        '''
+            Test Anonymous user can't cancel upvote
+        '''
+        t = mommy.make('topics.Topic')
+        resp = client.post(reverse('cancel_upvote_topic', kwargs={'id_topic': t.id}), follow=True)
+        last_url, code = resp.redirect_chain[-1]
+        assert code == 302
+        assert last_url == reverse('user_login')

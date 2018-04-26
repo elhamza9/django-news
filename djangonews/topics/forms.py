@@ -5,7 +5,7 @@ from .models import Topic, Comment, Upvote
 class TopicForm(ModelForm):
     class Meta:
         model = Topic
-        exclude = ('published_at', 'author', 'nbr_upvotes')
+        exclude = ('published_at', 'author', 'nbr_upvotes', 'nbr_comments')
 
 class CommentForm(ModelForm):
     class Meta:
