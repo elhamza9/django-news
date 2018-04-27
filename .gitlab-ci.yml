@@ -6,7 +6,7 @@ stages:
 
 test:
   script:
-    - cd ./djangonews; pytest
+    - whoami; cd ./djangonews; pytest
 
 build:
   script:
