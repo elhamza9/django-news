@@ -1,5 +1,14 @@
 image: hamzael/django-test:latest
 
+stages:
+- test
+- build
+
 test:
   script:
     - cd ./djangonews; pytest
+
+build:
+  script:
+    - docker build -t hamzael/djangonews-app ./djangonews
+    - docker push hamzael/djangonews-app
