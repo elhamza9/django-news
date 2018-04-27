@@ -1,12 +1,16 @@
 import pytest
+import os
 
 from selenium.webdriver.common.action_chains import ActionChains
 
 import random
 
-@pytest.mark.skip
+protocol = 'https://' if os.environ.get('USING_HTTPS') == 'yes' else 'http://'
+used_domain = os.environ.get('USED_DOMAIN') or 'localhost:8000'
+site_index_url = '{}{}/'.format(protocol, used_domain)
+
 def test_ui_login(selenium):
-    selenium.get('http://127.0.0.1:8000')
+    selenium.get(site_index_url)
     login_link = selenium.find_element_by_id('login-link')
     login_link.click()
     login_form = selenium.find_element_by_id('login-form')
@@ -17,12 +21,13 @@ def test_ui_login(selenium):
     login_btn = selenium.find_element_by_id('login-btn')
     login_btn.click()
     selenium.implicitly_wait(2)
-    assert selenium.current_url == 'http://127.0.0.1:8000/'
+    assert selenium.current_url == site_index_url
     assert selenium.find_element_by_id('logout-link')
 
+@pytest.mark.skip
 def test_ui_logout(selenium):
     test_ui_login(selenium)
-    assert selenium.current_url == 'http://127.0.0.1:8000/'
+    assert selenium.current_url == site_index_url
     welcome_menu = selenium.find_element_by_id('welcome-menu')
     ActionChains(selenium).move_to_element(welcome_menu)
     logout_link = selenium.find_element_by_id('logout-link')
@@ -33,7 +38,7 @@ def test_ui_logout(selenium):
 
 @pytest.mark.skip
 def test_ui_browse_to_detail_topic_page(selenium):
-    selenium.get('http://127.0.0.1:8000')
+    selenium.get(site_index_url)
     # Wait for 5 seconds until the Ajax Calls finish
     selenium.implicitly_wait(5) 
     article_links = selenium.find_elements_by_class_name('article-link')

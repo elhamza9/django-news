@@ -4,7 +4,7 @@ services:
     web-server:
         build: ./web-server
         ports:
-            - 8000:80
+            - 4433:443
         depends_on:
             - app-server
         volumes:

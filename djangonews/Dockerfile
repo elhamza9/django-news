@@ -2,6 +2,7 @@ FROM alpine:3.7
 
 ENV SRC="/usr/src/djangonews" \
     USED_DOMAIN="app-server" \
+    USING_HTTPS="yes" \
     DB_HOST="db-server" \
     DB_PORT="5432" \
     STATIC_PATH="/var/www/djangonews/static" \
