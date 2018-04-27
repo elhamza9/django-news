@@ -1,7 +1,10 @@
 import pytest
 import os
 
-from selenium.webdriver.common.action_chains import ActionChains
+try:
+    from selenium.webdriver.common.action_chains import ActionChains
+except Exception as e:
+    pass
 
 import random
 
