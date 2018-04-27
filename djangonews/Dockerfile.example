@@ -6,9 +6,9 @@ ENV SRC="/usr/src/djangonews" \
     USING_HTTPS="yes" \
     DB_HOST="db-server" \
     DB_PORT="5432" \
-    DJANGO_SECRET_KEY="par^7+km)=_5($^z*=i8-m5+1!e^&+=&6cbh3@yhm!xzyn(iu!" \
-    SOCIAL_AUTH_FB_KEY="XXX" \
-    SOCIAL_AUTH_FB_SECRET="XXX"
+    DJANGO_SECRET_KEY="XXXX" \
+    SOCIAL_AUTH_FB_KEY="XXXX" \
+    SOCIAL_AUTH_FB_SECRET="XXXX"
 
 # Update and install python 3
 RUN apk update && apk add python3 
