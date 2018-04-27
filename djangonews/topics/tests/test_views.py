@@ -40,7 +40,7 @@ class TestTopic:
         req = req_factory.get(reverse('site_index'))
         req.user = anonymous_user
         resp = views.list_topics(req)
-        assert resp.status_code == 200
+        assert resp.status_code == 20
 
     def test_detail_topic_view(self, req_factory, anonymous_user):
         '''
