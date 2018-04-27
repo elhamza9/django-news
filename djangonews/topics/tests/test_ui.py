@@ -24,7 +24,6 @@ def test_ui_login(selenium):
     assert selenium.current_url == site_index_url
     assert selenium.find_element_by_id('logout-link')
 
-@pytest.mark.skip
 def test_ui_logout(selenium):
     test_ui_login(selenium)
     assert selenium.current_url == site_index_url
@@ -36,7 +35,6 @@ def test_ui_logout(selenium):
     selenium.implicitly_wait(5)
     assert selenium.find_element_by_id('login-link')
 
-@pytest.mark.skip
 def test_ui_browse_to_detail_topic_page(selenium):
     selenium.get(site_index_url)
     # Wait for 5 seconds until the Ajax Calls finish
@@ -50,7 +48,6 @@ def test_ui_browse_to_detail_topic_page(selenium):
         assert 'topics/' in selenium.current_url
         assert selenium.find_element_by_class_name('topic-detail')
 
-@pytest.mark.skip
 def test_ui_logged_can_upvote_topic(selenium):
     test_ui_login(selenium)
     max_loop = 0
@@ -69,7 +66,6 @@ def test_ui_logged_can_upvote_topic(selenium):
     upvote_btn = selenium.find_element_by_id('upvote-btn')
     assert upvote_btn.get_attribute('class').strip() == 'upvoted'
 
-@pytest.mark.skip
 def test_ui_logged_can_comment_on_topic(selenium):
     # Login
     test_ui_login(selenium)
