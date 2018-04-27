@@ -11,7 +11,7 @@
         <label>Most Rated</label>
         <input type="radio" name="sort" value="rated" class="sort-filter-radio"/>
 </div>
-<div class="topics-list">
+<div id="topics-list" class="topics-list">
     <span class="line"></span>
 </div>
 <div class="pagination">
@@ -43,6 +43,7 @@
             header.classList.add('title');
             let link = document.createElement('a');
             link.classList.add('link');
+            link.classList.add('article-link');
             link.innerHTML = title;
             link.setAttribute('href', '/topics/' + slug);
             header.appendChild(link);

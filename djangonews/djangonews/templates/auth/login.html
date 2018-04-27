@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="login-wrapper">
-        <form role="form" method="post" action="{% url 'user_login' %}" class="login-form">
+        <form id="login-form" role="form" method="post" action="{% url 'user_login' %}" class="login-form">
             {% csrf_token %}
             <table>
                 {{ form.as_table }}
             </table>
-            <button type="submit">Sign in</button>
+            <button id="login-btn" type="submit">Sign in</button>
         </form>
         <p>or</p>
         <div class="social">

@@ -6,3 +6,9 @@ __pycache__/
 .pytest_cache/
 
 djangonews/db/db.sqlite3
+
+*.env
+*.key
+*.crt
+
+**/Dockerfile

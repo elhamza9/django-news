@@ -122,8 +122,12 @@ def upvote_topic(request, id_topic=0):
         raise Http404('Form invalid')
 
 def upvote_topic_cancel(request, id_topic=0):
+    user = request.user
+    if user == None or user.is_authenticated == False:
+        return redirect('user_login')
+
     topic = get_object_or_404(Topic, pk=id_topic)
-    res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=request.user))
+    res = Upvote.objects.filter(Q(topic=topic) & Q(upvoter=user))
     assert len(res) == 1
     res[0].delete()
     return redirect('detail_topic', slug=topic.slug)
@@ -140,7 +144,8 @@ def add_topic(request):
         if form.is_valid():
             form.save()
             return redirect('site_index')
-        return HttpResponse('Posting a Topic')
+        else:
+            raise Http404('Invalid Add Topic Form !')
     elif request.method == 'GET':
         form = TopicForm()
         return render(request, 'topics/form.html', {'action': 'Add', 'form': form})

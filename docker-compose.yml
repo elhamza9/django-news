@@ -3,22 +3,21 @@ version: '3'
 services:
     web-server:
         build: ./web-server
+        image: hamzael/djangonews-web
         ports:
-            - 8000:80
+            - 4433:443
         depends_on:
             - app-server
         volumes:
             - static_vol:/var/www/djangonews
     db-server:
         image: postgres:alpine
-        environment:
-            - POSTGRES_DB=djangonews_db
-            - POSTGRES_USER=djangonews
-            - POSTGRES_PASSWORD=djangonewspass
+        env_file: ./db-server.env
         volumes:
             - db_vol:/var/lib/postgresql/data
     app-server:
         build: ./djangonews
+        image: hamzael/djangonews-app
         depends_on:
             - db-server
         volumes:
