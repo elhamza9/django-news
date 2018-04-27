@@ -1,4 +1,7 @@
 import pytest
+
+from selenium.webdriver.common.action_chains import ActionChains
+
 import random
 
 @pytest.mark.skip
@@ -17,14 +20,16 @@ def test_ui_login(selenium):
     assert selenium.current_url == 'http://127.0.0.1:8000/'
     assert selenium.find_element_by_id('logout-link')
 
-'''
 def test_ui_logout(selenium):
     test_ui_login(selenium)
+    assert selenium.current_url == 'http://127.0.0.1:8000/'
+    welcome_menu = selenium.find_element_by_id('welcome-menu')
+    ActionChains(selenium).move_to_element(welcome_menu)
     logout_link = selenium.find_element_by_id('logout-link')
-    logout_link.click()
-    selenium.implicitly_wait(2)
+    logout_url = logout_link.get_attribute('href')
+    selenium.get(logout_url)
+    selenium.implicitly_wait(5)
     assert selenium.find_element_by_id('login-link')
-'''
 
 @pytest.mark.skip
 def test_ui_browse_to_detail_topic_page(selenium):

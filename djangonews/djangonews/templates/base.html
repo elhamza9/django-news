@@ -12,7 +12,7 @@
             </div>
             <div class="profile">
                 {% if user.is_authenticated %}
-                    <span class="welcome">Welcome <span class="username">{{ user.get_username }} !</span> </span>
+                    <span id="welcome-menu" class="welcome">Welcome <span class="username">{{ user.get_username }} !</span> </span>
                     <div class="sub-menu">
                         <ul>
                             <li>
