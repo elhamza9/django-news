@@ -11,4 +11,6 @@ test:
 build:
   script:
     - docker build -t hamzael/djangonews-app ./djangonews
+    - docker build -t hamzael/djangonews-web ./web-server
+    - docker push hamzael/djangonews-web
     - docker push hamzael/djangonews-app
