@@ -34,4 +34,14 @@ USER djangonews
 
 EXPOSE 8000
 
-ENTRYPOINT ["ash", "./entry.sh"]
+RUN ash ./entry.sh
+
+USER root
+
+RUN mkdir -p $STATIC_PATH/tinymce/js && \
+    cp -R /usr/lib/python3.6/site-packages/tinymce/static/tinymce/js/* $STATIC_PATH/tinymce/js && \
+    chown -R djangonews:djangonews $STATIC_PATH/
+
+USER djangonews
+
+CMD gunicorn --access-logfile - --log-file - --workers 2 djangonews.wsgi:application -b 0.0.0.0:8000
