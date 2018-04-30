@@ -3,13 +3,15 @@ from django.contrib.auth.models import User
 
 from django.utils import timezone
 
+from tinymce import HTMLField
+
 # Create your models here.
 
 class Topic(models.Model):
     published_at = models.DateTimeField(blank=False, null=False,  default=timezone.now())
     title = models.CharField(blank=False, null=False, max_length=100)
     slug = models.CharField(blank=False, null=False, unique=True,max_length=100)
-    content = models.TextField(blank=False, null=False)
+    content = HTMLField('Content')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author of the Topic')
     nbr_upvotes = models.IntegerField(blank=False, null=False, default=0)
     nbr_comments = models.IntegerField(blank=False, null=False, default=0)

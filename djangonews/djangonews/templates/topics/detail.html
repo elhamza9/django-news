@@ -13,9 +13,9 @@
         </header>
     <span class="line"></span>
         <div class="content">
-            <p>
-                {{ content }}
-            </p>
+            <div>
+                {{ content | safe }}
+            </div>
         </div>
     </article>
     <span class="line"></span>
