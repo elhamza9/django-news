@@ -3,6 +3,7 @@ FROM alpine:3.7
 ENV SRC="/usr/src/djangonews" \
     STATIC_PATH="/var/www/djangonews/static" \
     USED_DOMAIN="ec2-54-200-24-133.us-west-2.compute.amazonaws.com" \
+    PROD="prod" \
     USING_HTTPS="yes" \
     DB_HOST="db-server" \
     DB_PORT="5432" \
