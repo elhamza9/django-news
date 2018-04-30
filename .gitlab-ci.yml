@@ -7,8 +7,7 @@ stages:
   - deploy
 
 test_app:
-  stage:
-    - test
+  stage: test
   script:
     - cd ./djangonews; pytest
 
