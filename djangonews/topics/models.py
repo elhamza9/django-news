@@ -8,7 +8,7 @@ from tinymce import HTMLField
 # Create your models here.
 
 class Topic(models.Model):
-    published_at = models.DateTimeField(blank=False, null=False,  default=timezone.now())
+    published_at = models.DateTimeField(blank=False, null=False, auto_now_add=True )
     title = models.CharField(blank=False, null=False, max_length=100)
     slug = models.CharField(blank=False, null=False, unique=True,max_length=100)
     content = HTMLField('Content')
@@ -25,7 +25,7 @@ class Topic(models.Model):
 
 
 class Comment(models.Model):
-    published_at = models.DateTimeField(blank=False, null=False, default=timezone.now())
+    published_at = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     content = models.TextField(blank=False, null=False)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='comments', verbose_name='related Topic')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author of the comment')
@@ -38,7 +38,7 @@ class Comment(models.Model):
 
 
 class Upvote(models.Model):
-    timestamp = models.DateTimeField(blank=False, null=False, default=timezone.now())
+    timestamp = models.DateTimeField(blank=False, null=False, auto_now_add=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='upvotes', verbose_name='Upvoted Topic')
     upvoter = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User who upvoted')
 
