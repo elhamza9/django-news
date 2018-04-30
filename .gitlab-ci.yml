@@ -5,20 +5,20 @@ stages:
 - build
 - deploy
 
-job 1:
+pytest:
   stage:
     - test
   script:
     - cd ./djangonews; pytest
 
-job 2:
+build-docker-images:
   stage: build
   only: ci
   script:
     - docker build -t hamzael/djangonews-app ./djangonews
     - docker build -t hamzael/djangonews-web ./web-server
 
-job 3:
+deploy-to-dockerhub:
   stage: deploy
   only: ci
   script:
