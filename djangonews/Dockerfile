@@ -3,7 +3,7 @@ FROM alpine:3.7
 ENV SRC="/usr/src/djangonews" \
     STATIC_PATH="/var/www/djangonews/static" \
     USED_DOMAIN="ec2-54-200-24-133.us-west-2.compute.amazonaws.com" \
-    PROD="prod" \
+    ENV="staging" \
     USING_HTTPS="yes" \
     DB_HOST="db-server" \
     DB_PORT="5432" \
@@ -32,17 +32,19 @@ RUN pip3 install -r ./requirements.pip
 
 USER djangonews
 
-EXPOSE 8000
-
-RUN ash ./entry.sh
+# Quick Fix to wait for DB
+RUN sleep 5 && \
+    python3 manage.py migrate && \
+    python3 manage.py collectstatic --noinput
 
 USER root
 
 RUN mkdir -p $STATIC_PATH/tinymce/js && \
     cp -R /usr/lib/python3.6/site-packages/tinymce/static/tinymce/js/* $STATIC_PATH/tinymce/js && \
-    chown -R djangonews:djangonews $STATIC_PATH/ && \
-    sleep 5
+    chown -R djangonews:djangonews $STATIC_PATH/
 
 USER djangonews
+
+EXPOSE 8000
 
 CMD gunicorn --access-logfile - --log-file - --workers 2 djangonews.wsgi:application -b 0.0.0.0:8000
