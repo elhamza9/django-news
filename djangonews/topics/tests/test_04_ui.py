@@ -96,6 +96,17 @@ def test_ui_logged_can_comment_on_topic(selenium):
     # Compare them
     assert nbr_comments_after - nbr_comments_before == 1
 
+@pytest.mark.skip
+def test_ui_topics_ajax_pagination(selenium):
+    selenium.get(site_index_url)
+    more_btn = selenium.find_element_by_id('more-btn')
+    nbr_topics_before = len(selenium.find_elements_by_class_name('topic-block'))
+    more_btn.click()
+    selenium.implicitly_wait(5)
+    nbr_topics_after = len(selenium.find_elements_by_class_name('topic-block'))
+    assert nbr_topics_before < nbr_topics_after
+
+@pytest.mark.skip
 def test_ui_logged_can_write_topic(selenium):
     # Login
     test_ui_login(selenium)
