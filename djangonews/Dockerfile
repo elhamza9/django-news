@@ -40,7 +40,8 @@ USER root
 
 RUN mkdir -p $STATIC_PATH/tinymce/js && \
     cp -R /usr/lib/python3.6/site-packages/tinymce/static/tinymce/js/* $STATIC_PATH/tinymce/js && \
-    chown -R djangonews:djangonews $STATIC_PATH/
+    chown -R djangonews:djangonews $STATIC_PATH/ && \
+    sleep 5
 
 USER djangonews
 
