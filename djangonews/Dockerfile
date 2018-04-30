@@ -44,4 +44,4 @@ USER djangonews
 
 EXPOSE 8000
 
-CMD ./entry.sh
+CMD ["ash","entry.sh"]
