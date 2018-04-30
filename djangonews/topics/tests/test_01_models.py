@@ -11,6 +11,13 @@ from datetime import datetime
 
 pytestmark = pytest.mark.django_db
 
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_mommy_topic_content_html_gen():
+    def mommy_html_gen():
+        return '<h3>This is mommy generated content !</h3>'
+    mommy.generators.add('tinymce.models.HTMLField', mommy_html_gen)
+
 @pytest.fixture
 def topic_fixture():
     "Provides a single Topic object"
