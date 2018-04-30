@@ -36,8 +36,7 @@ RUN python3 manage.py collectstatic --noinput
 
 USER root
 
-RUN mkdir -p $STATIC_PATH/tinymce && \
-    cp -R /usr/lib/python3.6/site-packages/tinymce/static/tinymce/* $STATIC_PATH/tinymce/ && \
+RUN cp -R /usr/lib/python3.6/site-packages/tinymce/static/tinymce/ $STATIC_PATH/ && \
     chown -R djangonews:djangonews $STATIC_PATH/
 
 USER djangonews
