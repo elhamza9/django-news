@@ -1,17 +1,18 @@
 image: hamzael/django-test:latest
 
+
 stages:
 - test
 - build
 - deploy
 
-test_app:
+job test_app:
   stage:
     - test
   script:
     - cd ./djangonews; pytest
 
-build_docker_images:
+job build_docker_images:
   stage: build
   only:
     - ci
@@ -19,7 +20,8 @@ build_docker_images:
     - docker build -t hamzael/djangonews-app ./djangonews
     - docker build -t hamzael/djangonews-web ./web-server
 
-deploy_to_dockerhub:
+
+job deploy_to_dockerhub:
   stage: deploy
   only:
     - ci
