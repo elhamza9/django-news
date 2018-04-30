@@ -96,4 +96,20 @@ def test_ui_logged_can_comment_on_topic(selenium):
     # Compare them
     assert nbr_comments_after - nbr_comments_before == 1
 
-
+def test_ui_logged_can_write_topic(selenium):
+    # Login
+    test_ui_login(selenium)
+    # Browse to "write topic" page
+    selenium.get(site_index_url + 'topics/new')
+    # Fill Form
+    title_input = selenium.find_element_by_id('id_title')
+    title_input.send_keys('Selenium Test')
+    slug_input = selenium.find_element_by_id('id_slug')
+    slug_input.send_keys('selenium-test')
+    selenium.switch_to_frame('id_content_ifr')
+    selenium.find_element_by_id("tinymce").clear()
+    selenium.find_element_by_id("tinymce").send_keys('Some text here')
+    selenium.switch_to_default_content()
+    # Submit
+    submit_btn = selenium.find_element_by_id('write-topic-btn')
+    submit_btn.click()
