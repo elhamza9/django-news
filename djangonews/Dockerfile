@@ -33,7 +33,7 @@ RUN pip3 install -r ./requirements.pip
 USER djangonews
 
 # Quick Fix to wait for DB
-RUN sleep 5 && \
+RUN sleep 15 && \
     python3 manage.py migrate && \
     python3 manage.py collectstatic --noinput
 
