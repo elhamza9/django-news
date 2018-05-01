@@ -6,7 +6,7 @@
 <div class="topic-detail-wrapper">
     <article class="topic-detail">
         <header>
-            <h1 class="title">{{ title }}</h1>
+            <h1 class="title">{{ title }} {% if user.is_authenticated and user.id == author_id %} <span class="options">( <a id="edit-link" href="{% url 'edit_topic' id_topic=id %}">edit</a> | <a id="delete-link" href="{% url 'delete_topic' id_topic=id %}">delete</a>)</span>{% endif%}</h1>
             <div class="detail">
                 <span class="detail">Posted <span class="date">{{ published_at }}</span> by <span class="author">{{ author_name }}</span></span>
             </div>

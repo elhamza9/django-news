@@ -55,6 +55,29 @@ def test_ui_browse_to_detail_topic_page(selenium):
         assert selenium.find_element_by_class_name('topic-detail')
 
 @pytest.mark.skip
+def test_ui_logged_can_edit_topic(selenium):
+    test_ui_login(selenium)
+    test_ui_browse_to_detail_topic_page(selenium)
+    edit_link = selenium.find_element_by_id('edit-link')
+    edit_link.click()
+    selenium.implicitly_wait(3)
+    title_input = selenium.find_element_by_id('id_title')
+    title_input.send_keys('changed title')
+    save_btn = selenium.find_element_by_id('write-topic-btn')
+    save_btn.click()
+    selenium.implicitly_wait(3)
+    assert selenium.current_url == site_index_url
+
+@pytest.mark.skip
+def test_ui_logged_can_delete_topic(selenium):
+    test_ui_login(selenium)
+    test_ui_browse_to_detail_topic_page(selenium)
+    delete_link = selenium.find_element_by_id('delete-link')
+    delete_link.click()
+    selenium.implicitly_wait(3)
+    assert selenium.current_url == site_index_url
+
+@pytest.mark.skip
 def test_ui_logged_can_upvote_topic(selenium):
     test_ui_login(selenium)
     max_loop = 0

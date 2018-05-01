@@ -78,7 +78,7 @@ class TestTopic:
         '''
         req = req_factory.get(reverse('add_topic'))
         req.user = registered_user
-        resp = views.add_topic(req)
+        resp = views.add_edit_topic(req)
         assert resp.status_code == 200, 'View should return 200 because user is authenticated'
 
     def test_logged_can_post_topic(self, req_factory, registered_user):
@@ -91,7 +91,7 @@ class TestTopic:
             'content': 'My Awesome topic is great. upvote it !'
         })
         req.user = registered_user
-        resp = views.add_topic(req)
+        resp = views.add_edit_topic(req)
         assert Topic.objects.get(slug='my-topic')
 
     def test_logged_post_invalid_topic_exception(self, req_factory, registered_user):
@@ -108,7 +108,7 @@ class TestTopic:
         })
         req.user = registered_user
         with pytest.raises(Http404):
-            resp = views.add_topic(req)
+            resp = views.add_edit_topic(req)
 
 class TestComment:
 

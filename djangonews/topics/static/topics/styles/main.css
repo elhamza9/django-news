@@ -53,10 +53,11 @@ header.base-header .profile .welcome {
     cursor: pointer;
     font-size: 17px;
 }
-
+/*
 header.base-header .profile:hover .sub-menu {
     display: block;
 }
+*/
 
 header.base-header .profile .welcome .username {
     color: #5a71be;
@@ -99,8 +100,9 @@ main.base-main {
 }
 
 .topics-list .topic-block .title {
-    color: black;
+    color: #2977db;
     font-size: 30px;
+    text-decoration: underline;
     margin: 5px;
 }
 .topics-list .topic-block .detail {
@@ -149,6 +151,10 @@ main.base-main {
 
 .topic-detail-wrapper .topic-detail header .title {
     margin-bottom: 6px;
+}
+
+.topic-detail-wrapper .topic-detail header .title .options {
+    font-size: 14px;
 }
 
 .topic-detail header {

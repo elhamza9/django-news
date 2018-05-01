@@ -13,13 +13,13 @@
             <div class="profile">
                 {% if user.is_authenticated %}
                     <span id="welcome-menu" class="welcome">Welcome <span class="username">{{ user.get_username }} !</span> </span>
-                    <div class="sub-menu">
+                    <div id="sub-menu" class="sub-menu">
                         <ul>
                             <li>
-                                    <a class="link" href="#">Profile</a>
+                                <a class="link" href="#">Profile</a>
                             </li>
                             <li>
-                                    <a id="write-topic-link" class="link" href="{% url 'add_topic' %}">Write a Topic</a>
+                                <a id="write-topic-link" class="link" href="{% url 'add_topic' %}">Write a Topic</a>
                             </li>
                             <li>
                                 <a id="logout-link" class="link" href="{% url 'user_logout' %}">Logout</a>
@@ -35,15 +35,31 @@
             {% block content %}
             {% endblock %}
         </main>
-        
-        <!-- Jquery CDN
-            <script
-                src="https://code.jquery.com/jquery-3.3.1.min.js" 
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-                crossorigin="anonymous">
-            </script>
-        -->
-  
+
+        <script>
+            // add some interaction to menu
+            const menu = document.getElementById('welcome-menu');
+            const subMenu = document.getElementById('sub-menu');
+            let subMenuIsHidden = true;
+            menu.addEventListener('mouseover', (ev) => {
+                subMenu.style.display = 'block';
+            });
+            menu.addEventListener('mouseout', (ev) => {
+                if (subMenuIsHidden) {
+                    subMenu.style.display = 'none';
+                }
+            });
+            menu.addEventListener('click', (ev) => {
+                if (subMenuIsHidden) {
+                    subMenu.style.display = 'block';
+                    subMenuIsHidden = false;
+                } else {
+                    subMenu.style.display = 'none';
+                    subMenuIsHidden = true;
+                }
+            })
+            
+        </script>
         {% block js %}
         {% endblock %}
     </body>

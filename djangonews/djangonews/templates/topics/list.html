@@ -52,8 +52,8 @@
             detail.classList.add('detail');
             detail.innerHTML = `( ${nbrComments} comment${nbrComments > 1 ? 's' : ''}, ${nbrUpvotes} upvote${nbrUpvotes > 1 ? 's' : ''} )`;
 
-            let p = document.createElement('p');
-            p.innerHTML = content.length > 200 ? (content.substring(0,200) + '...')  : content;
+            let contentDiv = document.createElement('div');
+            contentDiv.innerHTML = content.length > 200 ? (content.substring(0,200) + '...')  : content;
 
             let footer = document.createElement('div');
             let readMore = document.createElement('a');
@@ -66,7 +66,7 @@
 
             article.appendChild(header);
             article.appendChild(detail);
-            article.appendChild(p);
+            article.appendChild(contentDiv);
             article.appendChild(footer);
             
             wrapper.appendChild(article);

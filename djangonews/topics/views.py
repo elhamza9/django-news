@@ -54,6 +54,7 @@ def detail_topic(request, slug=''):
             'published_at': topic.published_at ,
             'content': topic.content,
             'id': topic.id,
+            'author_id': topic.author.id,
             'author_name': topic.author.get_username(),
             'comments': topic.comments.all(),
             'nbr_upvotes': topic.nbr_upvotes,
@@ -132,22 +133,40 @@ def upvote_topic_cancel(request, id_topic=0):
     res[0].delete()
     return redirect('detail_topic', slug=topic.slug)
 
-def add_topic(request):
+def add_edit_topic(request, id_topic=0):
     try:
         assert request.user.is_authenticated == True
     except AssertionError:
         return redirect('user_login')
 
     if request.method == 'POST':
-        topic = Topic(author=request.user)
-        form = TopicForm(instance=topic, data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('site_index')
+        if id_topic == 0:
+            topic = Topic(author=request.user)
+            form = TopicForm(instance=topic, data=request.POST)
+            if form.is_valid():
+                form.save()
+            else:
+                raise Http404('Invalid Add Topic Form !')
         else:
-            raise Http404('Invalid Add Topic Form !')
+            topic = Topic.objects.get(id=id_topic)
+            topic.title = request.POST.get('title')
+            topic.slug = request.POST.get('slug')
+            topic.content = request.POST.get('content')
+            topic.save()
+        return redirect('site_index')
     elif request.method == 'GET':
-        form = TopicForm()
+        if id_topic == 0:
+            form = TopicForm()
+        else:
+            t = Topic.objects.get(id=id_topic)
+            if t is not None:
+                form = TopicForm(instance=t)
+            else:
+                raise Http404('Wrong Topic ID')
         return render(request, 'topics/form.html', {'action': 'Add', 'form': form})
     else:
         raise Http404('Wrong Method')
+
+def delete_topic(request, id_topic):
+    Topic.objects.get(id=id_topic).delete()
+    return redirect('site_index')
