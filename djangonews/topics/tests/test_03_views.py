@@ -52,6 +52,9 @@ class TestTopic:
         resp = views.detail_topic(req, t.slug)
         assert resp.status_code == 200 , 'View Should return 200'
 
+    def test_edit_topic_view(self, req_factory, registered_user):
+        pass
+
     def test_detail_topic_wrong_slug_raises_exception(self,req_factory, anonymous_user):
         '''
             Test Http404 Exception gets raised when trying to access
@@ -109,6 +112,61 @@ class TestTopic:
         req.user = registered_user
         with pytest.raises(Http404):
             resp = views.add_edit_topic(req)
+    
+    def test_logged_can_edit_his_topic(self, req_factory, registered_user):
+        '''
+            Test that logged user can edit a topic he posted
+        '''
+        topic = mommy.make('topics.Topic', author=registered_user)
+        previous_title = topic.title
+        new_title = 'My Edited Topic'
+        req = req_factory.post(reverse('edit_topic', kwargs={'id_topic': topic.id}), data={
+            'title': new_title,
+            'slug': 'my-edited-topic',
+            'content': 'My Awesome topic is great. upvote it !'
+            })
+        req.user = registered_user
+        resp = views.add_edit_topic(req, topic.id)
+        topic = Topic.objects.get(id=topic.id)
+        assert topic.title != previous_title and topic.title == new_title
+    
+    def test_logged_cant_edit_anothers_topic(self, req_factory, registered_user):
+        '''
+            Test that logged user can't edit a topic he didn't post
+        '''
+        other_user = User.objects.create_user(username='other', password='otherpassword')
+        topic = mommy.make('topics.Topic', author=other_user)
+        req = req_factory.post(reverse('edit_topic', kwargs={'id_topic': topic.id}), data={
+            'title': 'My Edited Topic',
+            'slug': 'my-edited-topic',
+            'content': 'My Awesome topic is great. upvote it !'
+            })
+        req.user = registered_user
+        with pytest.raises(Http404):
+            resp = views.add_edit_topic(req, topic.id)
+
+
+    def test_logged_can_delete_his_topic(self, req_factory, registered_user):
+        '''
+            Test that logged user can delete topic he posted
+        '''
+        topic = mommy.make('topics.Topic', author=registered_user)
+        req = req_factory.get(reverse('delete_topic', kwargs={'id_topic': topic.id}))
+        req.user = registered_user
+        resp = views.delete_topic(req, topic.id)
+        with pytest.raises(ObjectDoesNotExist):
+            Topic.objects.get(id=topic.id)
+    
+    def test_logged_cant_delete_anothers_topic(self, req_factory, registered_user):
+        '''
+            Test that logged user can't delete a topic of another user
+        '''
+        other_user = User.objects.create_user(username='other', password='otherpassword')
+        topic = mommy.make('topics.Topic', author=other_user)
+        req = req_factory.get(reverse('delete_topic', kwargs={'id_topic': topic.id}))
+        req.user = registered_user
+        with pytest.raises(Http404):
+            resp = views.delete_topic(req, topic.id)
 
 class TestComment:
 

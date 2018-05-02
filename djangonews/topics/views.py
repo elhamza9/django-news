@@ -149,6 +149,8 @@ def add_edit_topic(request, id_topic=0):
                 raise Http404('Invalid Add Topic Form !')
         else:
             topic = Topic.objects.get(id=id_topic)
+            if topic.author != request.user:
+                raise Http404('Not allowed to edit topic you didnt post yourself')
             topic.title = request.POST.get('title')
             topic.slug = request.POST.get('slug')
             topic.content = request.POST.get('content')
@@ -168,5 +170,9 @@ def add_edit_topic(request, id_topic=0):
         raise Http404('Wrong Method')
 
 def delete_topic(request, id_topic):
-    Topic.objects.get(id=id_topic).delete()
+    topic = Topic.objects.get(id=id_topic)
+    if topic.author == request.user:
+        topic.delete()
+    else:
+        raise Http404('Not allowed to delete topic you didnt post')
     return redirect('site_index')

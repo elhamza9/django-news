@@ -12,7 +12,6 @@ protocol = 'https://' if os.environ.get('USING_HTTPS') == 'yes' else 'http://'
 used_domain = os.environ.get('USED_DOMAIN') or 'localhost:8000'
 site_index_url = '{}{}/'.format(protocol, used_domain)
 
-@pytest.mark.skip
 def test_ui_login(selenium):
     selenium.get(site_index_url)
     login_link = selenium.find_element_by_id('login-link')
@@ -28,7 +27,6 @@ def test_ui_login(selenium):
     assert selenium.current_url == site_index_url
     assert selenium.find_element_by_id('logout-link')
 
-@pytest.mark.skip
 def test_ui_logout(selenium):
     test_ui_login(selenium)
     assert selenium.current_url == site_index_url
@@ -40,7 +38,6 @@ def test_ui_logout(selenium):
     selenium.implicitly_wait(5)
     assert selenium.find_element_by_id('login-link')
 
-@pytest.mark.skip
 def test_ui_browse_to_detail_topic_page(selenium):
     selenium.get(site_index_url)
     # Wait for 5 seconds until the Ajax Calls finish
@@ -54,7 +51,6 @@ def test_ui_browse_to_detail_topic_page(selenium):
         assert 'topics/' in selenium.current_url
         assert selenium.find_element_by_class_name('topic-detail')
 
-@pytest.mark.skip
 def test_ui_logged_can_edit_topic(selenium):
     test_ui_login(selenium)
     test_ui_browse_to_detail_topic_page(selenium)
@@ -68,7 +64,6 @@ def test_ui_logged_can_edit_topic(selenium):
     selenium.implicitly_wait(3)
     assert selenium.current_url == site_index_url
 
-@pytest.mark.skip
 def test_ui_logged_can_delete_topic(selenium):
     test_ui_login(selenium)
     test_ui_browse_to_detail_topic_page(selenium)
@@ -77,7 +72,6 @@ def test_ui_logged_can_delete_topic(selenium):
     selenium.implicitly_wait(3)
     assert selenium.current_url == site_index_url
 
-@pytest.mark.skip
 def test_ui_logged_can_upvote_topic(selenium):
     test_ui_login(selenium)
     max_loop = 0
@@ -96,7 +90,6 @@ def test_ui_logged_can_upvote_topic(selenium):
     upvote_btn = selenium.find_element_by_id('upvote-btn')
     assert upvote_btn.get_attribute('class').strip() == 'upvoted'
 
-@pytest.mark.skip
 def test_ui_logged_can_comment_on_topic(selenium):
     # Login
     test_ui_login(selenium)
@@ -119,7 +112,6 @@ def test_ui_logged_can_comment_on_topic(selenium):
     # Compare them
     assert nbr_comments_after - nbr_comments_before == 1
 
-@pytest.mark.skip
 def test_ui_topics_ajax_pagination(selenium):
     selenium.get(site_index_url)
     more_btn = selenium.find_element_by_id('more-btn')
@@ -129,7 +121,6 @@ def test_ui_topics_ajax_pagination(selenium):
     nbr_topics_after = len(selenium.find_elements_by_class_name('topic-block'))
     assert nbr_topics_before < nbr_topics_after
 
-@pytest.mark.skip
 def test_ui_logged_can_write_topic(selenium):
     # Login
     test_ui_login(selenium)
