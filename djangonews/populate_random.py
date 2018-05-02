@@ -15,7 +15,7 @@ public_user = User.objects.create_user(username=os.environ.get('PUBLIC_USER'), p
 
 tz = timezone.get_current_timezone()
 
-f = open('lorem.txt', 'r')
+f = open('populate_lorem_ipsium.txt', 'r')
 if f.mode == 'r':
     text = f.read()
 else:
