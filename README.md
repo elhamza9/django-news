@@ -37,6 +37,7 @@ The test coverage is of about 92%
 ### Continuous Integration
 
 Gitlab CI was used for continuous integration.
+A custom runner installed in Amazon EC2 was used for handling the pipeline.
 
 The file gitlab-ci.yml specifies 3 stages: test, build and deploy.
 
