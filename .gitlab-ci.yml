@@ -14,7 +14,7 @@ test_app:
 build_docker_images:
   stage: build
   only:
-    - ci
+    - master
   script:
     - docker build -t hamzael/djangonews-app ./djangonews
     - docker build -t hamzael/djangonews-web ./web-server
@@ -22,7 +22,7 @@ build_docker_images:
 deploy_to_dockerhub:
   stage: deploy
   only:
-    - ci
+    - master
   script:
     - docker push hamzael/djangonews-web
     - docker push hamzael/djangonews-app
