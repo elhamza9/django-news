@@ -6,7 +6,11 @@ from django.contrib.auth.models import AnonymousUser, User
 from django.http.response import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
+
 from model_mommy import mommy
+
+from django.contrib.auth.views import LoginView
+from djangonews.views import profile
 
 from topics import views
 from topics.models import Topic, Comment, Upvote
@@ -29,6 +33,18 @@ def registered_user():
 @pytest.fixture(scope="module")
 def anonymous_user():
     return AnonymousUser()
+
+class TestAuth:
+    def test_login_view(self, req_factory):
+        req = req_factory.get(reverse('user_login'))
+        resp = LoginView.as_view()(req)
+        assert resp.status_code == 200
+    
+    def test_profile(self, req_factory, registered_user):
+        req = req_factory.get(reverse('profile'))
+        req.user = registered_user
+        resp = profile(req)
+        assert resp.status_code == 200
 
 
 class TestTopic:
