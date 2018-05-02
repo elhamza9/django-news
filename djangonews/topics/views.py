@@ -159,13 +159,15 @@ def add_edit_topic(request, id_topic=0):
     elif request.method == 'GET':
         if id_topic == 0:
             form = TopicForm()
+            form_title = 'Add'
         else:
             t = Topic.objects.get(id=id_topic)
             if t is not None:
                 form = TopicForm(instance=t)
+                form_title = 'Edit'
             else:
                 raise Http404('Wrong Topic ID')
-        return render(request, 'topics/form.html', {'action': 'Add', 'form': form})
+        return render(request, 'topics/form.html', {'action': form_title, 'form': form})
     else:
         raise Http404('Wrong Method')
 
