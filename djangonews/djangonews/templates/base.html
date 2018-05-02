@@ -10,7 +10,7 @@
             <div class="logo">
                 <a class="link" href="{% url 'site_index' %}">Django News !</a>
             </div>
-            <div class="profile">
+            <div id="profile-menu" class="profile">
                 {% if user.is_authenticated %}
                     <span id="welcome-menu" class="welcome">Welcome <span class="username">{{ user.get_username }} !</span> </span>
                     <div id="sub-menu" class="sub-menu">
@@ -38,7 +38,8 @@
 
         <script>
             // add some interaction to menu
-            const menu = document.getElementById('welcome-menu');
+    
+            const menu = document.getElementById('profile-menu');
             const subMenu = document.getElementById('sub-menu');
             let subMenuIsHidden = true;
             menu.addEventListener('mouseover', (ev) => {
@@ -58,7 +59,7 @@
                     subMenuIsHidden = true;
                 }
             })
-            
+ 
         </script>
         {% block js %}
         {% endblock %}
