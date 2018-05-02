@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="profile">
+    <h1 class="welcome">Welcome to your profile <span class="username">{{ username }}</span> !</h1>
+
+    <h2>Your statistics</h2>
+
+    <table class="stats-table">
+        <tr>
+            <th>Number of Posted Topics</th>
+            <th>Number of Upvotes</th>
+            <th>Number of Comments</th>
+        </tr>
+        <tr>
+            <td>{{ nbr_topics }}</td>
+            <td>{{ nbr_upvotes }}</td>
+            <td>{{ nbr_comments }}</td>
+        </tr>
+    </table>
+
+    <h3>Your Topics:</h3>
+    <ul>
+    {% for t in topics %}
+        <li>- You published: <a href="/topics/{{ t.slug }}">{{ t.title }}</a> on {{t.published_at}}</li>
+    {% endfor %}
+    </ul>
+
+    <h3>Your Upvotes:</h3>
+    <ul>
+    {% for u in upvotes %}
+        <li>- You upvoted <a href="/topics/{{ u.topic.slug }}">this topic</a> on {{u.timestamp}}</li>
+    {% endfor %}
+    </ul>
+
+    <h3>Your Comments:</h3>
+    <ul>
+    {% for c in comments %}
+        <li>- You commented on <a href="/topics/{{ c.topic.slug }}">this topic</a> on {{c.published_at}}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

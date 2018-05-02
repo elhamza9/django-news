@@ -84,6 +84,19 @@ main.base-main {
     padding-right: 100px;
 }
 
+.profile .welcome .username {
+    color: red;
+}
+
+.profile .stats-table {
+    border: 1px solid black;
+    text-align: center;
+}
+.profile .stats-table th, .profile .stats-table td {
+    border: 1px solid black;
+    padding: 15px;
+}
+
 .topics-list .sort-filter-wrapper .sort-filter-radio {
     cursor: pointer;
 } 

@@ -27,5 +27,6 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='user_logout'),
     path('oauth/', include('social_django.urls', namespace='social')),  # for Facebook Auth
     path('tinymce/', include('tinymce.urls')),
+    path('profile/', views.profile, name='profile'),
     path('',list_topics, name='site_index')
 ]
