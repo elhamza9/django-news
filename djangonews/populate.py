@@ -25,7 +25,7 @@ else:
 Topic.objects.all().delete()
 for i in range(100):
     t = Topic()
-    day = random.randrange(1,30)
+    day = random.randrange(1,27)
     month = random.randrange(1,12)
     year = 2010 + random.randrange(1,8)
     date = datetime.date(year,month,day)
