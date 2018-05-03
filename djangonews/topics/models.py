@@ -8,7 +8,7 @@ from tinymce import HTMLField
 # Create your models here.
 
 class Topic(models.Model):
-    published_at = models.DateTimeField(blank=False, null=False, auto_now_add=True )
+    published_at = models.DateTimeField(blank=False, null=False, default=timezone.now() )
     title = models.CharField(blank=False, null=False, max_length=100)
     slug = models.CharField(blank=False, null=False, unique=True,max_length=100)
     content = HTMLField('Content')
