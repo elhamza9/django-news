@@ -140,6 +140,12 @@ if os.environ.get('USING_HTTPS') == 'yes':
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
+# For Email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('DJANGO_SMTP_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_SMTP_PASS')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

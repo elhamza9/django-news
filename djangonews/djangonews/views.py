@@ -1,7 +1,13 @@
 from django.shortcuts import redirect, render
 from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+from django.core.mail import send_mail
+
 from topics.models import Topic, Upvote, Comment
+from django.contrib.auth.models import User
 from djangonews.forms import UserForm
+
 def welcome(request):
     return redirect('list_topics')
 
