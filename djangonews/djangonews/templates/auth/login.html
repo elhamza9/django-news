@@ -9,8 +9,12 @@
             <table>
                 {{ form.as_table }}
             </table>
+            <div class="forgot-pass" >
+                <a id="forgot-pass-link" class="link" href="{% url 'recover_password' %}">I forgot my password :/</a>
+            </div>
             <button id="login-btn" type="submit">Sign in</button>
         </form>
+        
         <p>or</p>
         <div class="social">
             <a class="link" href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a>

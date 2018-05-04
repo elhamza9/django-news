@@ -314,3 +314,9 @@ header .detail .author, .detail .date {
     display: block;
     margin: 5px 0;
 }
+
+.login-wrapper .forgot-pass {
+    font-size: 13px;
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
