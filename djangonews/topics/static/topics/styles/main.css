@@ -30,16 +30,30 @@ header.base-header .logo {
     float: left;
     font-size: 30px;
     padding: 10px;
+    max-width: 30%;
 }
 
 header.base-header .logo .link {
     color: orange;
 }
 
+header.base-header .messages {
+    display: inline-block;
+    padding: 20px;
+    width: 40%;
+}
+header.base-header .messages .success {
+    color: green;
+}
+header.base-header .messages .error {
+    color: red;
+}
+
 header.base-header .profile {
     position: relative;
     float: right;
     margin: 20px 10px 0px 0px;
+    max-width: 30%;
 }
 
 header.base-header .profile .sub-menu {
