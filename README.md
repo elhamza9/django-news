@@ -2,13 +2,16 @@
 This is a mini project to learn the Django Framework (2.0), Docker/docker-compose, Pytest/Selenium and Gitlab CI ( Continuous Integration)
 
 ## Description of the Django App
-- The User signs up/in using Facebook
-- User can submit a new Topic
-- User can upvote a Topic
-- User can comment on a Topic
+- The User signs up/in using Facebook or username/password
+- The user can reset his password by receiving an email
+- The user can change his personal info
+- User can submit/edit/delete a new Topic
+- User can upvote/cancel upvote a Topic
+- User can comment/delete comment a Topic
+- The user can see all his statistics (posted topics, upvoted, commented)
 - User can sort Topics by 'Most Recent' & 'Most Rated'
-- User can see number of comments by Topic
-- User can click on 'more' to see the next 50 Topics
+- User can see number of upvotes/comments by Topic
+- User can click on 'more' to see the next 20 Topics
 
 ## Technical description of the project
 
