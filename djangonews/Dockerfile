@@ -9,7 +9,9 @@ ENV SRC="/usr/src/djangonews" \
     DB_PORT="5432" \
     DJANGO_SECRET_KEY="%+nz*dtyc+wh=#8!aasl2xkuo$m^oejnuqjptx57z0f4_^7xzh" \
     SOCIAL_AUTH_FB_KEY="179060132912002" \
-    SOCIAL_AUTH_FB_SECRET="1d78f8fe1b2cbec37b611e96003bf77c"
+    SOCIAL_AUTH_FB_SECRET="1d78f8fe1b2cbec37b611e96003bf77c"\
+    DJANGO_SMTP_USER="hamza.elbouatmani@gmail.com" \
+    DJANGO_SMTP_PASS="pQ2!gmH^zHd6u#SqEbOM"
 
 # Update and install python 3
 RUN apk update && apk add python3 
