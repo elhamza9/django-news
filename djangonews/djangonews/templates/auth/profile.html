@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %} Login {% endblock %}
+{% block title %} Profile {% endblock %}
 
 {% block content %}
 <div class="profile">
-    <h1 class="welcome">Welcome to your profile <span class="username">{{ username }}</span> !</h1>
+    <h1 class="welcome">Welcome to your profile <span class="username">{{ fullname }}</span> !</h1>
+
+    <h2>Your personal info</h2>
+
+    <form class="user-info-form" method="post" action="{% url 'profile_change_basic_info' %}">
+        {% csrf_token %}
+        {% for hidden_field in user_info_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        {% for field in user_info_form.visible_fields %}
+            <div class="field">
+                <label>{{ field.label_tag }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+            <div class="field">
+                <label></label>
+                <button id="save-user-info-btn" type="submit">Save</button>
+            </div>
+    </form>
 
     <h2>Your statistics</h2>
 

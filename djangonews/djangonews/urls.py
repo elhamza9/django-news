@@ -28,5 +28,6 @@ urlpatterns = [
     path('oauth/', include('social_django.urls', namespace='social')),  # for Facebook Auth
     path('tinymce/', include('tinymce.urls')),
     path('profile/', views.profile, name='profile'),
+    path('profile/change/basic-info', views.profile_change_basic_info, name='profile_change_basic_info'),
     path('',list_topics, name='site_index')
 ]
