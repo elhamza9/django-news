@@ -37,16 +37,19 @@ header.base-header .logo .link {
 }
 
 header.base-header .profile {
-    display: inline-block;
+    position: relative;
     float: right;
     margin: 20px 10px 0px 0px;
 }
 
 header.base-header .profile .sub-menu {
+    position: absolute;
     border: 1px solid black;
     background-color: white;
     margin-top: 5px;
     display: none;
+    top: 15px;
+    right: 0px;
 }
 
 header.base-header .profile .welcome {
